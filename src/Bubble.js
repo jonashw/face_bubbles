@@ -1,7 +1,7 @@
 var _bounceSnd;
-function Bubble(img,snd,strokeColor,pos,vel,w){
+function Bubble(img,sounds,strokeColor,pos,vel,w){
   this.img = img;
-  this.snd = snd;
+  this.snd = new CircularArray(sounds);
   this.pos = pos;
   this.vel = vel;
   this.rot = 0;
@@ -23,9 +23,11 @@ function Bubble(img,snd,strokeColor,pos,vel,w){
   };
 
   this.mouseClicked = function(){
-      this.snd.setVolume(0.3);
-      this.snd.play();
-      this.spinning = true;
+    let s = this.snd.getCurrent();
+    s.setVolume(0.3);
+    s.play();
+    this.spinning = true;
+    this.snd.next();
   };
 
   this.mouseIsOver = function(){
