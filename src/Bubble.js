@@ -7,6 +7,7 @@ function Bubble(img,sounds,strokeColor,vel,w){
   this.rot = 0;
   this.w = w;
   this.spinning = false;
+  this.spinPositive = true;
 
   this.draw = function(){
     push();
@@ -24,6 +25,10 @@ function Bubble(img,sounds,strokeColor,vel,w){
   
   let _activate = function(){
     let s = this.snd.getCurrent();
+    if(keyIsDown(SHIFT)){
+      s.reverseBuffer();
+      this.spinPositive = !this.spinPositive;
+    } 
     if(s.isPlaying()){
       s.stop();
     }
@@ -63,9 +68,17 @@ function Bubble(img,sounds,strokeColor,vel,w){
       this.rot += 5;
     }
     if(this.spinning){
-      this.rot += 10;
+      if(this.spinPositive){
+        this.rot += 10;
+      } else {
+        this.rot -= 10;
+      }
       if(this.rot >= 360){
-        this.rot = 0;
+        this.rot = this.rot % 360;
+      } else if (this.rot < 0) {
+        this.rot += 360;
+      }
+      if(this.rot == 0){
         this.spinning = false;
       }
     }
