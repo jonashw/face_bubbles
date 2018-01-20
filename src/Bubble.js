@@ -6,8 +6,13 @@ function Bubble(img,sounds,strokeColor,vel,w){
   this.vel = vel;
   this.rot = 0;
   this.w = w;
-  this.spinning = false;
   this.spinPositive = true;
+
+  var _doneSpinningListeners = [];
+  this.onceDoneSpinning = function(callback){
+    _doneSpinningListeners = [callback];
+  }
+  sounds.forEach(s => s.onended(donePlayingSound.bind(this)));
 
   this.draw = function(){
     push();
@@ -17,7 +22,7 @@ function Bubble(img,sounds,strokeColor,vel,w){
     strokeWeight(7);
     stroke(strokeColor);
     //position refers to the CENTER of the bubble.
-    let s = this.spinning ? this.w * 1.5 : this.w;
+    let s = this.snd.getCurrent().isPlaying() ? this.w * 1.5 : this.w;
     image(this.img, -s/2, -s/2, s, s);
     ellipse(0, 0, s, s);
     pop();
@@ -35,16 +40,17 @@ function Bubble(img,sounds,strokeColor,vel,w){
     }
     s.setVolume(0.3);
     s.play();
-    this.spinning = true;
   };
+
+  function donePlayingSound(){
+    console.log('done playing sound');
+    _doneSpinningListeners.forEach(l => l());
+    _doneSpinningListeners.splice(0);
+  }
 
   this.touchStarted = _activate.bind(this);
   this.touched = _activate.bind(this);
 
-  var _doneSpinningListeners = [];
-  this.onceDoneSpinning = function(callback){
-    _doneSpinningListeners = [callback];
-  }
 
   this.impactFrom = function(impactPos){
     let funFactor = 20000;
@@ -72,7 +78,7 @@ function Bubble(img,sounds,strokeColor,vel,w){
     if(keyIsDown(RIGHT_ARROW)){
       this.rot += 5;
     }
-    if(this.spinning){
+    if(this.snd.getCurrent().isPlaying()){
       if(this.spinPositive){
         this.rot += 10;
       } else {
@@ -84,10 +90,6 @@ function Bubble(img,sounds,strokeColor,vel,w){
         this.rot += 360;
       }
       if(this.rot == 0){
-        this.spinning = false;
-        _doneSpinningListeners.forEach(l => l());
-        _doneSpinningListeners.splice(0);
-        this.snd.next();
       }
     }
   };
@@ -135,3 +137,5 @@ function Bubble(img,sounds,strokeColor,vel,w){
 Bubble.setup = function(){
   _bounceSnd = loadSound("../assets/sounds/impactcrash-basketball-bounce-wood-surface-thud-blastwavefx-29503.mp3");
 }
+
+function BubbleState(){}

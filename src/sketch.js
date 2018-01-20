@@ -188,6 +188,9 @@ function handlePointAction(point){
   if(!!touchedBubble)
   {
     touchedBubble.touched();
+    var index = bubbles.indexOf(touchedBubble);
+    bubbles.splice(index,1);
+    bubbles.push(touchedBubble);
     touchedBubble.onceDoneSpinning(() => {
       //Early-drawn bubbles may be covered up partially by later-drawn bubbles.
       //When a bubble is touched it should move down to "z-index" 0, so to speak, so other bubbles may be better exposed to touch
