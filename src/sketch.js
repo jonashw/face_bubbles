@@ -69,6 +69,21 @@ function setup() {
       [loadSound("../assets/sounds/fetus-1.wav")],
       color(43,255,148),
       createVector(-1.5,2.5),
+      w),
+    new Bubble(loadImage("../assets/pasta1.png"),
+      [loadSound("../assets/sounds/pasta-1.wav")],
+      color(43,255,148),
+      createVector(-1.5,2.5),
+      w),
+    new Bubble(loadImage("../assets/water3.png"),
+      [loadSound("../assets/sounds/water-1.wav")],
+      color(43,255,148),
+      createVector(-1.5,2.5),
+      w),
+    new Bubble(loadImage("../assets/salsa2.png"),
+      [loadSound("../assets/sounds/salsa-1.wav")],
+      color(43,255,148),
+      createVector(-1.5,2.5),
       w)
     ];
 
