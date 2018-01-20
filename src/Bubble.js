@@ -21,13 +21,26 @@ function Bubble(img,sounds,strokeColor,pos,vel,w){
     ellipse(0, 0, s, s);
     pop();
   };
-
-  this.mouseClicked = function(){
+  
+  let _activate = function(){
     let s = this.snd.getCurrent();
     s.setVolume(0.3);
     s.play();
     this.spinning = true;
     this.snd.next();
+  };
+
+  this.touchStarted = _activate.bind(this);
+  this.mouseClicked = _activate.bind(this);
+
+  let funFactor = 200000;
+  this.impactFrom = function(impactPos){
+    let impactOffset = p5.Vector.sub(impactPos, this.pos);
+    let d = impactOffset.mag();
+    let intensity = 1 / (d * d); //Source: https://www.nde-ed.org/EducationResources/CommunityCollege/Radiography/Physics/inversesquare.htm
+    let deltaV = impactOffset.normalize().mult(intensity * funFactor);
+    let inverse = createVector(-deltaV.x, -deltaV.y);
+    this.vel = p5.Vector.add(this.vel, inverse);
   };
 
   this.mouseIsOver = function(){

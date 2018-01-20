@@ -81,11 +81,16 @@ function update(){
 }
 
 function mouseClicked(){
-  bubbles.forEach(b => {
-    if(b.mouseIsOver()){
-      b.mouseClicked();
-    }
-  });
+  let clickedBubbles = bubbles.filter(b => b.mouseIsOver());
+  if(clickedBubbles.length > 0)
+  {
+    clickedBubbles.forEach(b => b.mouseClicked());
+  } else {
+    //canvas clicked.  let's do something that affects all bubbles.
+    let v = createVector(mouseX,mouseY);
+    bubbles.forEach(b => b.impactFrom(v))
+    console.log('Canvas clicked');
+  }
 }
 
 function keyPressed(){
