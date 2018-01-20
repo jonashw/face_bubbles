@@ -64,23 +64,15 @@ function setup() {
       [loadSound("../assets/sounds/dogs-dog-bark-springer-spaniel-1.mp3")],
       color(43,255,148),
       createVector(-1.5,2.5),
+      w),
+    new Bubble(loadImage("../assets/fetus1.png"),
+      [loadSound("../assets/sounds/fetus-1.wav")],
+      color(43,255,148),
+      createVector(-1.5,2.5),
       w)
     ];
 
   arrangements = [
-    (count, size) => {
-      var p = 100;
-      var px = width / count;
-      var py = height / count;
-      return [
-        //This arrangement assumes count == 5 .
-        createVector(width / 2  , height / 2),
-        createVector(px         , py),
-        createVector(width - px , py),
-        createVector(px         , height - py),
-        createVector(width - px , height - py)
-      ];
-    },
     (count, size) => {
       var w = width - size;
       var h = height - size;
@@ -101,7 +93,20 @@ function setup() {
     },
     (count,size) => {
       return chevronArrangement(count,size,false);
-    }
+    },
+    (count, size) => {
+      var p = 100;
+      var px = width / count;
+      var py = height / count;
+      return [
+        //This arrangement assumes count == 5 .
+        createVector(width / 2  , height / 2),
+        createVector(px         , py),
+        createVector(width - px , py),
+        createVector(px         , height - py),
+        createVector(width - px , height - py)
+      ];
+    },
   ];
 
   applyArrangement(arrangements[0]);
@@ -126,7 +131,7 @@ function setup() {
 }
 
 function applyArrangement(arrangement){
-  zip(bubbles, arrangement(5,150)).forEach(pair => pair[0].pos = pair[1]);
+  zip(bubbles, arrangement(bubbles.length,150)).forEach(pair => pair[0].pos = pair[1]);
 }
 
 function draw() {
