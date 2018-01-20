@@ -5,13 +5,13 @@ var backgrounds = [];
 var bg;
 function setup() {
   colorMode(HSL, 255, 255, 255, 100);
-  bg = new Background([
-      color(0,0,50),
-      color(102,55,148),
-      color(170,255,148),
-      color(238,255,148),
-      color(43,255,148)
-  ]);
+  bg = new Background((() => {
+    var _hues = [];
+    for(var h=0;h<256;h++){
+      _hues.push(color(h,255,148));
+    }
+    return _hues;
+  })());
   angleMode(DEGREES);
   createCanvas(windowWidth, windowHeight);
   var w = 150;
