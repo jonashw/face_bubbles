@@ -48,6 +48,11 @@ function Bubble(img,sounds,strokeColor,pos,vel,w){
   };
 
   this.update = function(){
+    this.updateRotation();
+    this.updatePosition();
+  };
+
+  this.updateRotation = function(){
     if(keyIsDown(LEFT_ARROW)){
       this.rot -= 5;
     }
@@ -61,7 +66,6 @@ function Bubble(img,sounds,strokeColor,pos,vel,w){
         this.spinning = false;
       }
     }
-    this.bounce();
   };
 
   function playBounceSound(){
@@ -69,7 +73,7 @@ function Bubble(img,sounds,strokeColor,pos,vel,w){
       _bounceSnd.play();
   }
 
-  this.bounce = function(){
+  this.updatePosition = function(){
     let c = keyIsDown(32 /* SPACE */) ? 0.25 : 1;
 
     this.pos.x += this.vel.x * c;

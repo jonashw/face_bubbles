@@ -71,9 +71,6 @@ function setup() {
 }
 
 function draw() {
-  if(!playing){
-    return;
-  }
   update();
   bg.draw();
   bubbles.forEach(function(b){ b.draw(); });
@@ -81,7 +78,11 @@ function draw() {
 
 function update(){
   bg.update();
-  bubbles.forEach(function(b){ b.update(); });
+  bubbles.forEach(function(b){ b.updateRotation(); });
+  if(!playing){
+    return;
+  }
+  bubbles.forEach(function(b){ b.updatePosition(); });
 }
 
 function mouseClicked(){
