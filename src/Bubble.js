@@ -24,6 +24,9 @@ function Bubble(img,sounds,strokeColor,vel,w){
   
   let _activate = function(){
     let s = this.snd.getCurrent();
+    if(s.isPlaying()){
+      s.stop();
+    }
     s.setVolume(0.3);
     s.play();
     this.spinning = true;
