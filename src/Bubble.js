@@ -46,6 +46,7 @@ function Bubble(img,sounds,strokeColor,vel,w){
     console.log('done playing sound');
     _doneSpinningListeners.forEach(l => l());
     _doneSpinningListeners.splice(0);
+    this.snd.next();
   }
 
   this.touchStarted = _activate.bind(this);
