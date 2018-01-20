@@ -184,10 +184,17 @@ function mousePressed(){
 }
 
 function handlePointAction(point){
-  let touchedBubbles = bubbles.filter(b => b.containsPoint(point.x,point.y));
-  if(touchedBubbles.length > 0)
+  let touchedBubble = bubbles.filter(b => b.containsPoint(point.x,point.y)).reverse()[0];
+  if(!!touchedBubble)
   {
-    touchedBubbles.forEach(b => b.touched());
+    touchedBubble.touched();
+    touchedBubble.onceDoneSpinning(() => {
+      //Early-drawn bubbles may be covered up partially by later-drawn bubbles.
+      //When a bubble is touched it should move down to "z-index" 0, so to speak, so other bubbles may be better exposed to touch
+      var index = bubbles.indexOf(touchedBubble);
+      bubbles.splice(index,1);
+      bubbles.unshift(touchedBubble);
+    });
   } else {
     bubbles.forEach(b => b.impactFrom(point))
   }

@@ -30,16 +30,21 @@ function Bubble(img,sounds,strokeColor,vel,w){
       this.spinPositive = !this.spinPositive;
     } 
     if(s.isPlaying()){
+      this.rot = 0;
       s.stop();
     }
     s.setVolume(0.3);
     s.play();
     this.spinning = true;
-    this.snd.next();
   };
 
   this.touchStarted = _activate.bind(this);
   this.touched = _activate.bind(this);
+
+  var _doneSpinningListeners = [];
+  this.onceDoneSpinning = function(callback){
+    _doneSpinningListeners = [callback];
+  }
 
   this.impactFrom = function(impactPos){
     let funFactor = 20000;
@@ -80,6 +85,9 @@ function Bubble(img,sounds,strokeColor,vel,w){
       }
       if(this.rot == 0){
         this.spinning = false;
+        _doneSpinningListeners.forEach(l => l());
+        _doneSpinningListeners.splice(0);
+        this.snd.next();
       }
     }
   };
