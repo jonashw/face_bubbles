@@ -4,8 +4,10 @@ var bubbles = [];
 var backgrounds = [];
 var bg;
 var playing = true;
+var touchColor;
 function setup() {
   colorMode(HSL, 255, 255, 255, 100);
+  touchColor = color(0,0,0,50);
   bg = new Background((() => {
     var _hues = [];
     for(var h=0;h<256;h++){
@@ -74,6 +76,11 @@ function draw() {
   update();
   bg.draw();
   bubbles.forEach(function(b){ b.draw(); });
+  touches.forEach(t => {
+    noStroke();
+    fill(touchColor);
+    ellipse(t.x, t.y, 200, 200);
+  });
 }
 
 function update(){
