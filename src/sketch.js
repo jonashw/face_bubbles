@@ -3,6 +3,7 @@
 var bubbles = [];
 var backgrounds = [];
 var bg;
+var playing = true;
 function setup() {
   colorMode(HSL, 255, 255, 255, 100);
   bg = new Background((() => {
@@ -70,6 +71,9 @@ function setup() {
 }
 
 function draw() {
+  if(!playing){
+    return;
+  }
   update();
   bg.draw();
   bubbles.forEach(function(b){ b.draw(); });
@@ -95,6 +99,9 @@ function mouseClicked(){
 
 function keyPressed(){
   let boostFactor = 1.25;
+  if(keyCode == ESCAPE){
+    playing = !playing;
+  }
   if(keyCode == ENTER){
     fullscreen(!fullscreen());
   }
