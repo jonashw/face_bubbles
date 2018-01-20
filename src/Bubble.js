@@ -33,8 +33,8 @@ function Bubble(img,sounds,strokeColor,vel,w){
   this.touchStarted = _activate.bind(this);
   this.touched = _activate.bind(this);
 
-  let funFactor = 200000;
   this.impactFrom = function(impactPos){
+    let funFactor = 20000;
     let impactOffset = p5.Vector.sub(impactPos, this.pos);
     let d = impactOffset.mag();
     let intensity = 1 / (d * d); //Source: https://www.nde-ed.org/EducationResources/CommunityCollege/Radiography/Physics/inversesquare.htm

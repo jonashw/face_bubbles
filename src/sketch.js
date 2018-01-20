@@ -21,6 +21,9 @@ function setup() {
   var w = 150;
   var p = 100;
   Bubble.setup();
+  var mildVelocity = function(v){
+    return v.normalize().mult(0.5);
+  };
   bubbles = [
     new Bubble(
       loadImage("../assets/sawyer1.png"),
@@ -30,7 +33,7 @@ function setup() {
         loadSound("../assets/sounds/voice-prompts-pain-pain-child-girl-ouch-human-voice.mp3")
       ],
       color(170,255,148),
-      createVector(4,0),
+      mildVelocity(createVector(4,0)),
       w),
     new Bubble(loadImage("../assets/mama1.png"),
       [
@@ -42,7 +45,7 @@ function setup() {
         "mama-buh-bye.wav"
       ].map(fn => loadSound("../assets/sounds/" + fn)),
       color(238,255,148),
-      createVector(2,2),
+      mildVelocity(createVector(2,2)),
       w),
     new Bubble(loadImage("../assets/papa1.png"),
       [
@@ -50,7 +53,7 @@ function setup() {
         "papa-buh-bye-1.wav"
       ].map(fn => loadSound("../assets/sounds/" + fn)),
       color(102,55,148),
-      createVector(2,-2),
+      mildVelocity(createVector(2,-2)),
       w),
     new Bubble(loadImage("../assets/maizy1.png"),
       [
@@ -58,32 +61,32 @@ function setup() {
         //loadSound("../assets/sounds/speech-girl-says-huh-as-if-unsure-higher-nightingale-music-productions-12446.mp3")
       ],
       color(43,255,148),
-      createVector(3,1),
+      mildVelocity(createVector(3,1)),
       w),
     new Bubble(loadImage("../assets/cooper1.png"),
       [loadSound("../assets/sounds/dogs-dog-bark-springer-spaniel-1.mp3")],
       color(43,255,148),
-      createVector(-1.5,2.5),
+      mildVelocity(createVector(-1.5,2.5)),
       w),
     new Bubble(loadImage("../assets/fetus1.png"),
       [loadSound("../assets/sounds/fetus-1.wav")],
       color(43,255,148),
-      createVector(-1.5,2.5),
+      mildVelocity(createVector(-1.5,2.5)),
       w),
     new Bubble(loadImage("../assets/pasta1.png"),
       [loadSound("../assets/sounds/pasta-1.wav")],
       color(43,255,148),
-      createVector(-1.5,2.5),
+      mildVelocity(createVector(-1.5,2.5)),
       w),
     new Bubble(loadImage("../assets/water3.png"),
       [loadSound("../assets/sounds/water-1.wav")],
       color(43,255,148),
-      createVector(-1.5,2.5),
+      mildVelocity(createVector(-1.5,2.5)),
       w),
     new Bubble(loadImage("../assets/salsa2.png"),
       [loadSound("../assets/sounds/salsa-1.wav")],
       color(43,255,148),
-      createVector(-1.5,2.5),
+      mildVelocity(createVector(-1.5,2.5)),
       w)
     ];
 
