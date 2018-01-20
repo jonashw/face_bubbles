@@ -31,7 +31,7 @@ function Bubble(img,sounds,strokeColor,vel,w){
   };
 
   this.touchStarted = _activate.bind(this);
-  this.mouseClicked = _activate.bind(this);
+  this.touched = _activate.bind(this);
 
   let funFactor = 200000;
   this.impactFrom = function(impactPos){
@@ -43,8 +43,8 @@ function Bubble(img,sounds,strokeColor,vel,w){
     this.vel = p5.Vector.add(this.vel, inverse);
   };
 
-  this.mouseIsOver = function(){
-    return dist(this.pos.x, this.pos.y, mouseX, mouseY) <= this.w/2;
+  this.containsPoint = function(x,y){
+    return dist(this.pos.x, this.pos.y, x, y) <= this.w/2;
   };
 
   this.update = function(){

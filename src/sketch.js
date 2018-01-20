@@ -150,22 +150,24 @@ function update(){
 }
 
 function touchStarted(){
-  this.mousePressed(); // This causes a touch to be treated as a mouse action.
-  return false;        // This is to prevent pinch-zooming on touch devices.
+  var lastTouch = touches.slice().pop();
+  handlePointAction(createVector(lastTouch.x, lastTouch.y));
+  return false; // This is to prevent pinch-zooming on touch devices.
 }
 
 function mousePressed(){
-  let clickedBubbles = bubbles.filter(b => b.mouseIsOver());
-  if(clickedBubbles.length > 0)
-  {
-    clickedBubbles.forEach(b => b.mouseClicked());
-  } else {
-    //canvas clicked.  let's do something that affects all bubbles.
-    let v = createVector(mouseX,mouseY);
-    bubbles.forEach(b => b.impactFrom(v))
-    console.log('Canvas clicked');
-  }
+  handlePointAction(createVector(mouseX,mouseY));
   return false;
+}
+
+function handlePointAction(point){
+  let touchedBubbles = bubbles.filter(b => b.containsPoint(point.x,point.y));
+  if(touchedBubbles.length > 0)
+  {
+    touchedBubbles.forEach(b => b.touched());
+  } else {
+    bubbles.forEach(b => b.impactFrom(point))
+  }
 }
 
 function keyPressed(){
