@@ -210,6 +210,9 @@ function keyPressed(){
       applyArrangement(arrangements[index]);
     }
   }
+  if(keyCode == 78 /* N */){
+    bubbles.forEach(b => b.vel = b.vel.normalize());
+  }
   let boostFactor = 1.25;
   if(keyCode == ESCAPE){
     playing = !playing;
