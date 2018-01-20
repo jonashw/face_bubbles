@@ -1,8 +1,8 @@
 var _bounceSnd;
-function Bubble(img,sounds,strokeColor,pos,vel,w){
+function Bubble(img,sounds,strokeColor,vel,w){
   this.img = img;
   this.snd = new CircularArray(sounds);
-  this.pos = pos;
+  this.pos = createVector(0,0);
   this.vel = vel;
   this.rot = 0;
   this.w = w;

@@ -3,8 +3,9 @@
 var bubbles = [];
 var backgrounds = [];
 var bg;
-var playing = true;
+var playing = false;
 var touchColor;
+var arrangements = [];
 function setup() {
   colorMode(HSL, 255, 255, 255, 100);
   touchColor = color(0,0,0,50);
@@ -29,7 +30,6 @@ function setup() {
         loadSound("../assets/sounds/voice-prompts-pain-pain-child-girl-ouch-human-voice.mp3")
       ],
       color(170,255,148),
-      createVector(width/2,height/2),
       createVector(4,0),
       w),
     new Bubble(loadImage("../assets/mama1.png"),
@@ -42,7 +42,6 @@ function setup() {
         "mama-buh-bye.wav"
       ].map(fn => loadSound("../assets/sounds/" + fn)),
       color(238,255,148),
-      createVector(p,p),
       createVector(2,2),
       w),
     new Bubble(loadImage("../assets/papa1.png"),
@@ -51,7 +50,6 @@ function setup() {
         "papa-buh-bye-1.wav"
       ].map(fn => loadSound("../assets/sounds/" + fn)),
       color(102,55,148),
-      createVector(width-p,p),
       createVector(2,-2),
       w),
     new Bubble(loadImage("../assets/maizy1.png"),
@@ -60,16 +58,75 @@ function setup() {
         //loadSound("../assets/sounds/speech-girl-says-huh-as-if-unsure-higher-nightingale-music-productions-12446.mp3")
       ],
       color(43,255,148),
-      createVector(p,height-p),
       createVector(3,1),
       w),
     new Bubble(loadImage("../assets/cooper1.png"),
       [loadSound("../assets/sounds/dogs-dog-bark-springer-spaniel-1.mp3")],
       color(43,255,148),
-      createVector(width-p,height-p),
       createVector(-1.5,2.5),
       w)
     ];
+
+  arrangements = [
+    (count, size) => {
+      var p = 100;
+      var px = width / count;
+      var py = height / count;
+      return [
+        //This arrangement assumes count == 5 .
+        createVector(width / 2  , height / 2),
+        createVector(px         , py),
+        createVector(width - px , py),
+        createVector(px         , height - py),
+        createVector(width - px , height - py)
+      ];
+    },
+    (count, size) => {
+      var w = width - size;
+      var h = height - size;
+      return range(1,count).map(n => createVector(
+        n*w/count - size/2,
+        n*h/count));
+    },
+    (count,size) => {
+      var w = width - size;
+      var h = height - size;
+      var dy = h/count;
+      var xs = range(1,count).map(n => n*w/count - size/2);
+      var ys = range(count,1).map(n => n*h/count);
+      return zipWith(xs, ys, createVector);
+    },
+    (count,size) => {
+      return chevronArrangement(count,size,true);
+    },
+    (count,size) => {
+      return chevronArrangement(count,size,false);
+    }
+  ];
+
+  applyArrangement(arrangements[0]);
+
+  function chevronArrangement(count,size,positive){
+    var w = width - size;
+    var h = height - size;
+    var xs = range(1,count).map(n => n*w/count - size/2);
+    var half = Math.floor(count / 2);
+    var rows = count % 2 == 0 ? half : half + 1;
+    var _ys1 = range(1,half+1).map(n => {
+      var yy = n * h / rows - size/2
+      return positive ? yy : height - yy;
+    });
+    var _ys2 = _ys1.slice(0,-1).reverse();
+    if(count % 2 == 0){
+      _ys1.pop();
+    }
+    var ys = Array.prototype.concat.call([], _ys1, _ys2);
+    return zipWith(xs, ys, createVector);
+  }
+}
+
+function applyArrangement(arrangement){
+  zip(bubbles, arrangement(5,150)).forEach(pair => pair[0].pos = pair[1]);
 }
 
 function draw() {
@@ -112,6 +169,12 @@ function mousePressed(){
 }
 
 function keyPressed(){
+  if(49 <= keyCode && keyCode <= (49 + 9)){
+    var index = keyCode - 49;
+    if(index < arrangements.length){
+      applyArrangement(arrangements[index]);
+    }
+  }
   let boostFactor = 1.25;
   if(keyCode == ESCAPE){
     playing = !playing;
