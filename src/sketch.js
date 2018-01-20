@@ -213,6 +213,9 @@ function keyPressed(){
   if(keyCode == 78 /* N */){
     bubbles.forEach(b => b.vel = b.vel.normalize());
   }
+  if(keyCode == 82 /* R */){
+    bubbles.forEach(b => b.rot = 0);
+  }
   let boostFactor = 1.25;
   if(keyCode == ESCAPE){
     playing = !playing;
