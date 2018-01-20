@@ -92,7 +92,12 @@ function update(){
   bubbles.forEach(function(b){ b.updatePosition(); });
 }
 
-function mouseClicked(){
+function touchStarted(){
+  this.mousePressed(); // This causes a touch to be treated as a mouse action.
+  return false;        // This is to prevent pinch-zooming on touch devices.
+}
+
+function mousePressed(){
   let clickedBubbles = bubbles.filter(b => b.mouseIsOver());
   if(clickedBubbles.length > 0)
   {
@@ -103,6 +108,7 @@ function mouseClicked(){
     bubbles.forEach(b => b.impactFrom(v))
     console.log('Canvas clicked');
   }
+  return false;
 }
 
 function keyPressed(){
