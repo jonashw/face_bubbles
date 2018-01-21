@@ -28,6 +28,7 @@ function setup() {
     new Bubble(
       loadImage("../assets/sawyer1.png"),
       [
+        loadSound("../assets/sounds/sawyer-by-papa.wav"),
         loadSound("../assets/sounds/voice-prompts-greetings-greetings-child-boy-hi-human-voice-speaking-2.mp3"),
         loadSound("../assets/sounds/other-human-girl-laughs-4-times-faster-and-higher-nightingale-music-productions-12449.mp3"),
         loadSound("../assets/sounds/voice-prompts-pain-pain-child-girl-ouch-human-voice.mp3")
@@ -39,6 +40,7 @@ function setup() {
       [
         //"mama-hello-1.wav",
         //"mama-hello-2.wav",
+        "mama-by-papa.wav",
         "mama-hi-1.wav",
         //"mama-hi-2.wav",
         //"mama-i-love-you.wav",
@@ -49,6 +51,7 @@ function setup() {
       w),
     new Bubble(loadImage("../assets/papa1.png"),
       [
+        "papa-by-papa.wav",
         "papa-hi-1.wav",
         "papa-buh-bye-1.wav"
       ].map(fn => loadSound("../assets/sounds/" + fn)),
@@ -57,6 +60,7 @@ function setup() {
       w),
     new Bubble(loadImage("../assets/maizy1.png"),
       [
+        loadSound("../assets/sounds/maizy-by-papa.wav"),
         loadSound("../assets/sounds/domestic-animals-dog-bark-jackrussel-chihuahua-fienup-008.mp3"),
         //loadSound("../assets/sounds/speech-girl-says-huh-as-if-unsure-higher-nightingale-music-productions-12446.mp3")
       ],
@@ -64,12 +68,18 @@ function setup() {
       mildVelocity(createVector(3,1)),
       w),
     new Bubble(loadImage("../assets/cooper1.png"),
-      [loadSound("../assets/sounds/dogs-dog-bark-springer-spaniel-1.mp3")],
+      [
+        loadSound("../assets/sounds/cooper-by-papa.wav"),
+        loadSound("../assets/sounds/dogs-dog-bark-springer-spaniel-1.mp3")
+      ],
       color(43,255,148),
       mildVelocity(createVector(-1.5,2.5)),
       w),
     new Bubble(loadImage("../assets/fetus1.png"),
-      [loadSound("../assets/sounds/fetus-1.wav")],
+      [
+        loadSound("../assets/sounds/baby-by-papa.wav"),
+        loadSound("../assets/sounds/fetus-1.wav")
+      ],
       color(43,255,148),
       mildVelocity(createVector(-1.5,2.5)),
       w),
@@ -85,6 +95,38 @@ function setup() {
       w),
     new Bubble(loadImage("../assets/salsa2.png"),
       [loadSound("../assets/sounds/salsa-1.wav")],
+      color(43,255,148),
+      mildVelocity(createVector(-1.5,2.5)),
+      w),
+    new Bubble(loadImage("../assets/gorilla1.png"),
+      [loadSound("../assets/sounds/gorilla-by-papa.wav")],
+      color(43,255,148),
+      mildVelocity(createVector(-1.5,2.5)),
+      w),
+    new Bubble(loadImage("../assets/monkey1.png"),
+      [
+        loadSound("../assets/sounds/monkey-by-papa.wav"),
+      ],
+      color(43,255,148),
+      mildVelocity(createVector(-1.5,2.5)),
+      w),
+    new Bubble(loadImage("../assets/elephant1.png"),
+      [loadSound("../assets/sounds/elephant-by-papa.wav")],
+      color(43,255,148),
+      mildVelocity(createVector(-1.5,2.5)),
+      w),
+    new Bubble(loadImage("../assets/koala1.png"),
+      [loadSound("../assets/sounds/koala-by-papa.wav")],
+      color(43,255,148),
+      mildVelocity(createVector(-1.5,2.5)),
+      w),
+    new Bubble(loadImage("../assets/turtle1.png"),
+      [loadSound("../assets/sounds/turtle-by-papa.wav")],
+      color(43,255,148),
+      mildVelocity(createVector(-1.5,2.5)),
+      w),
+    new Bubble(loadImage("../assets/lion1.png"),
+      [loadSound("../assets/sounds/lion-by-papa.wav")],
       color(43,255,148),
       mildVelocity(createVector(-1.5,2.5)),
       w)
