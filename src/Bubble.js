@@ -148,8 +148,8 @@ window.Bubble = (function(){
     return _outerDiameter;
   };
 
-  Bubble.setup = function(){
-    _bounceSnd = loadSound("../assets/sounds/impactcrash-basketball-bounce-wood-surface-thud-blastwavefx-29503.mp3");
+  Bubble.setup = function(bounceSound){
+    _bounceSnd = bounceSound;
   }
 
   return Bubble;

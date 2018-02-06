@@ -22,7 +22,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   var w = 150;
   var p = 100;
-  Bubble.setup();
+  Bubble.setup(loadSound("assets/sounds/impactcrash-basketball-bounce-wood-surface-thud-blastwavefx-29503.mp3"));
   var mildVelocity = function(v){
     return v.normalize().mult(0.5);
   };
