@@ -271,7 +271,7 @@ function handlePointAction(point){
       bubbles.splice(index,1);
       bubbles.unshift(touchedBubble);
     });
-  } else {
+  } else if(playing) {
     bubbles.forEach(b => b.impactFrom(point))
   }
 }
