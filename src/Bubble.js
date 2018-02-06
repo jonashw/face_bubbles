@@ -36,6 +36,9 @@ window.Bubble = (function(){
     
     let _activate = function(){
       let s = this.snd.getCurrent();
+      if(s.isPlaying()){
+        return;
+      }
       if(keyIsDown(SHIFT)){
         s.reverseBuffer();
         this.spinPositive = !this.spinPositive;
@@ -44,7 +47,7 @@ window.Bubble = (function(){
         this.rot = 0;
         s.stop();
       }
-      s.setVolume(0.3);
+      s.setVolume(0.5);
       s.play();
     };
 
@@ -57,7 +60,6 @@ window.Bubble = (function(){
 
     this.touchStarted = _activate.bind(this);
     this.touched = _activate.bind(this);
-
 
     this.impactFrom = function(impactPos){
       let funFactor = 20000;
