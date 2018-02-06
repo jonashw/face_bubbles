@@ -47,7 +47,7 @@ window.Bubble = (function(){
         this.rot = 0;
         s.stop();
       }
-      s.setVolume(0.5);
+      s.setVolume(0.7);
       s.play();
     };
 
@@ -104,7 +104,7 @@ window.Bubble = (function(){
     };
 
     function playBounceSound(){
-        _bounceSnd.setVolume(0.05);
+        _bounceSnd.setVolume(0.5);
         _bounceSnd.play();
     }
 
