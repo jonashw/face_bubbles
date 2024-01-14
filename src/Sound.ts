@@ -14,10 +14,12 @@ function urlWithFullHost(url: string){
     return `${l.protocol}//${l.host}${url}`;
 }
 
-export async function loadSound(u: string | [string,string]): Promise<ISound> {
+export async function loadSound(u: string | [string,string] | [string], defaultVoice?: string): Promise<ISound> {
     var relativeOrAbsoluteUrl = 
         u instanceof Array
-        ? `https://us-west1-jonashw-dev-personal-website.cloudfunctions.net/jonashw-dev-speech-synthesis-proxy?voice=${u[1]}&msg=${u[0]}`
+        ? u.length == 2 
+            ? `https://us-west1-jonashw-dev-personal-website.cloudfunctions.net/jonashw-dev-speech-synthesis-proxy?voice=${u[1]}&msg=${u[0]}`
+            : `https://us-west1-jonashw-dev-personal-website.cloudfunctions.net/jonashw-dev-speech-synthesis-proxy?voice=${defaultVoice || "Justin"}&msg=${u[0]}`
         : u;
     var url = relativeOrAbsoluteUrl.indexOf("http") === 0 ? relativeOrAbsoluteUrl : urlWithFullHost("/assets/sounds/" + relativeOrAbsoluteUrl);
     const r = await fetch(url,{redirect:'follow'});

@@ -6,12 +6,8 @@ import {ISound} from "./Sound";
 const _ellipseDiameter = 150;
 const _strokeWeight = 10;
 const _outerDiameter = _ellipseDiameter + _strokeWeight;
-var _bounceSnd: ISound | undefined;
 
 export default class Bubble {
-    static diameter() {
-        return _outerDiameter;
-    }
     img: any;
     sounds: CircularArray<ISound>;
     vel: any;
@@ -21,6 +17,7 @@ export default class Bubble {
     p5: P5CanvasInstance;
     strokeColor: any;
     _doneSpinningListeners: any[] = [];
+    wasLastBubbleTouched = false;
 
     constructor(p5: P5CanvasInstance, img: P5.Image, sounds: ISound[], strokeColor: any, vel: any) {
         this.p5 = p5;
@@ -39,10 +36,6 @@ export default class Bubble {
         console.log(shape.getURL());
         //img.mask(shape);
         */
-    }
-
-    static setup(bounceSound: ISound) {
-        _bounceSnd = bounceSound;
     }
 
     onceDoneSpinning(callback: any) {
@@ -74,8 +67,12 @@ export default class Bubble {
         this.sounds.next();
     }
 
-    touched() {
+    touched(wasLastBubbleTouched: boolean) {
         var p5 = this.p5;
+        this.wasLastBubbleTouched = wasLastBubbleTouched;
+        if(!wasLastBubbleTouched){
+            this.sounds.reset();
+        }
         let s = this.sounds.getCurrent();
         if (s.isPlaying()) {
             return;
@@ -138,26 +135,16 @@ export default class Bubble {
     }
 
     updateRotation() {
-        var { p5 } = this;
-        if (p5.keyIsDown(p5.LEFT_ARROW)) {
-            //this.rot -= 5;
+        if (!this.sounds.getCurrent().isPlaying()) {
+            return;
         }
-        if (p5.keyIsDown(p5.RIGHT_ARROW)) {
-            //this.rot += 5;
+        this.rot += (this.wasLastBubbleTouched ? -1 : 1) * 5;
+        if (this.rot >= 360) {
+            this.rot = this.rot % 360;
+        } else if (this.rot < 0) {
+            this.rot += 360;
         }
-        if (this.sounds.getCurrent().isPlaying()) {
-            if (this.spinPositive) {
-                this.rot += 10;
-            } else {
-                this.rot -= 10;
-            }
-            if (this.rot >= 360) {
-                this.rot = this.rot % 360;
-            } else if (this.rot < 0) {
-                this.rot += 360;
-            }
-            if (this.rot == 0) {
-            }
+        if (this.rot == 0) {
         }
     }
 
@@ -172,10 +159,19 @@ export default class Bubble {
 
     playBounceSound() {
         //console.log('bounce');
-        if(!_bounceSnd){
+        if(!Bubble._bounceSnd){
             return;
         }
-        _bounceSnd.setVolume(0.5);
-        _bounceSnd.play();
+        Bubble._bounceSnd.setVolume(0.5);
+        Bubble._bounceSnd.play();
+    }
+    
+    private static _bounceSnd: ISound | undefined;
+    static diameter() {
+        return _outerDiameter;
+    }
+    static setup(bounceSound: ISound) {
+        console.log({bounceSound});
+        Bubble._bounceSnd = bounceSound;
     }
 }

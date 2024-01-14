@@ -1,4 +1,5 @@
 {
+    "showFirstNBubbles": 6,
     "bubbles":[
         {
             "img": "mama1.png",

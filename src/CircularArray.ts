@@ -9,9 +9,19 @@ export default class CircularArray<T> {
         this.count = items.length;
     }
 
+    reset(){
+        this.index = 0;
+        var c = this.getCurrent();
+        if(!!this.onChange){
+            this.onChange(c);
+        }
+        return c;
+    }
+
     getCurrent() {
         return this.items[this.index];
     }
+
     next() {
         this.index += 1;
         if (this.index >= this.items.length) {

@@ -1,125 +1,52 @@
 {
+    "showFirstNBubbles": 8,
+    "defaultVoice":"Salli",
     "bubbles": [
         {
-            "img": "mama1.png",
-            "original_sounds": [
-                "mama-hello-1.wav",
-                "mama-hello-2.wav",
-                "mama-by-papa.wav",
-                "mama-hi-1.wav",
-                "mama-hi-2.wav",
-                "mama-i-love-you.wav",
-                "mama-buh-bye.wav"
-            ],
-            "sounds": [
-                "mama-by-papa.wav",
-                "mama-hi-1.wav",
-                "mama-buh-bye.wav"
-            ],
+            "img": "becky2024.png",
+            "sounds": [ ["Mama"], ["Becky"], ["Mama bear"] ],
             "color": [238, 255, 148],
             "velocity":[2,2]
         },
         {
-            "img": "papa1.png",
-            "sounds": [
-                "papa-by-papa.wav",
-                "papa-hi-1.wav",
-                "papa-buh-bye-1.wav"
-            ],
+            "img": "jon2024.png",
+            "sounds": [ ["Papa"], ["Jon"], ["Papa bear"]],
             "color": [102, 55, 148],
             "velocity":[2, -2]
         },
         {
-        "img":"sawyer1.png",
-        "sounds":[
-            "sawyer-by-papa.wav",
-            "voice-prompts-greetings-greetings-child-boy-hi-human-voice-speaking-2.mp3",
-            "other-human-girl-laughs-4-times-faster-and-higher-nightingale-music-productions-12449.mp3",
-            "voice-prompts-pain-pain-child-girl-ouch-human-voice.mp3"
-        ],
-        "color":[170,255,148],
-        "velocity":[4,0]
+            "img":"sawyer2024.png",
+            "sounds":[["Sawyer"],["Brother"],["bro-bro"]],
+            "color":[170,255,148],
+            "velocity":[4,0]
         },
         {
-            "img": "rowan1.png",
-            "sounds":[
-                ["Rowan","Joey"],
-                ["Row Row","Joey"],
-                ["Row Puppy","Joey"]
-            ],
+            "img":"fiona2024.png",
+            "sounds":[["Fiona"], ["sister"],["na-na"]],
+            "color":[170,255,148],
+            "velocity":[-4,0]
+        },
+        {
+            "img": "rowan2024.png",
+            "sounds":[["Rowan"],["row row"],["babbie"]],
+            "color":[43,255,148],
+            "velocity":[-1.5,2.5]
+        },
+        {
+            "img":"jayma2024.png",
+            "sounds":[["Grandma J"], ["Jayma"]],
             "color":[43,255,148],
             "velocity":[-1.5,2.5]
         },
         {
             "img":"maizy1.png",
-            "sounds":[
-                "maizy-by-papa.wav",
-                "domestic-animals-dog-bark-jackrussel-chihuahua-fienup-008.mp3",
-                "speech-girl-says-huh-as-if-unsure-higher-nightingale-music-productions-12446.mp3"
-            ],
-        "color": [43,255,148],
-        "velocity":[3,1]
+            "sounds":[["Maizy"],["dog"],["bark"],["woof"]],
+            "color": [43,255,148],
+            "velocity":[3,1]
         },
         {
             "img": "cooper1.png",
-            "sounds": [
-                "cooper-by-papa.wav",
-                "dogs-dog-bark-springer-spaniel-1.mp3"
-            ],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
-        },
-        {
-            "img":"pasta1.png",
-            "sounds":["pasta-1.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
-        },
-        {
-            "img":"water3.png",
-            "sounds":["water-1.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
-        },
-        {
-            "img":"salsa2.png",
-            "sounds":["salsa-1.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
-        },
-        {
-            "img":"gorilla1.png",
-            "sounds":["gorilla-by-papa.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
-        },
-        {
-            "img":"monkey1.png",
-            "sounds":[ "monkey-by-papa.wav" ],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
-        },
-        {
-            "img":"elephant1.png",
-            "sounds":["elephant-by-papa.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
-        },
-        {
-            "img":"koala1.png",
-            "sounds":["koala-by-papa.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
-        },
-        {
-            "img":"turtle1.png",
-            "sounds":["turtle-by-papa.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
-        },
-        {
-            "img":"lion1.png",
-            "sounds":["lion-by-papa.wav"],
+            "sounds": [ ["Cooper"], ["dog"],["bark"],["woof"] ],
             "color":[43,255,148],
             "velocity":[-1.5,2.5]
         }

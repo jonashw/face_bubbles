@@ -1,6 +1,6 @@
 import { ReactP5Wrapper, Sketch } from "@p5-wrapper/react";
 import React from 'react'
-import { useLoaderData } from "react-router-dom";
+import { LoaderFunction, useLoaderData } from "react-router-dom";
 import bubbles from "./sketches/bubbles";
 
 function useState<T>(initial: T){
@@ -8,7 +8,7 @@ function useState<T>(initial: T){
   return {value,set};
 }
 
-export function SketchLoader({params}:{params:{[key:string]: string}}): Sketch {
+export const SketchLoader: LoaderFunction = ({params}): Sketch => {
   return bubbles(`/cfg/${params.sketchId}.json`);
 }
 

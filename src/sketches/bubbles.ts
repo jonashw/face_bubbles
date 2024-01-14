@@ -5,13 +5,16 @@ import P5 from "p5";
 import getArrangements from "../Arrangement";
 import * as Sound from "../Sound";
 
+const loadingText = "LOADING";
+
 type StageDefinition = {
+    showFirstNBubbles: number,
     bubbles: BubbleDefinition[];
     defaultVoice: string | undefined;
 }
 type BubbleDefinition = {
     img: string;
-    sounds: string[];
+    sounds: (string | [string,string] | [string])[];
     color: [number,number,number];
     velocity: [number,number];
 };
@@ -19,11 +22,13 @@ type BubbleDefinition = {
 type XY = {x:number, y:number};
 
 const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
+    var settingTheStage = true;
     var bubbles: Bubble[] = [];
     var unusedBubbles: Bubble[] = [];
     var bg: Background;
     var bubblesMoving = false;
     var touchColor: P5.Color;
+    var lastBubbleTouched: Bubble | undefined = undefined;
 
     var arrangements = getArrangements(p5);
 
@@ -35,13 +40,14 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
             return new Bubble(
                 p5,
                 p5.loadImage("/assets/" + bd.img),
-                await Promise.all(bd.sounds.map(async fn => await Sound.loadSound(fn))),
+                await Promise.all(bd.sounds.map(async fn => await Sound.loadSound(fn, def.defaultVoice))),
                 p5.color(bd.color[0], bd.color[1], bd.color[2]),
                 mildVelocity(p5.createVector(bd.velocity[0], bd.velocity[1])));
         })).then(bs => {
+            settingTheStage = false;
             unusedBubbles = bs;
             bubbles = [];
-            for(var i=0; i<6; i++){
+            for(var i=0; i<def.showFirstNBubbles; i++){
                 var b = unusedBubbles.shift();
                 if(!!b){
                     bubbles.push(b);
@@ -49,7 +55,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
             }
             arrangements.getCurrent().apply(bubbles);
         });
-        Sound.loadSound("assets/sounds/basketball-bounce-wood-surface-thud-blastwavefx-29503.mp3")
+        Sound.loadSound("basketball-bounce-wood-surface-thud-blastwavefx-29503.mp3")
             .then(Bubble.setup);
     }
 
@@ -75,8 +81,15 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
     }
 
     p5.draw = () => {
-        update();
         bg.draw();
+        if(settingTheStage){
+            p5.textAlign(p5.CENTER, p5.CENTER);
+            p5.textSize(50);
+            p5.textFont("sans-serif");
+            p5.text(loadingText,p5.width/2, p5.height/2);
+            return;
+        }
+        update();
         bubbles.forEach(function(b){ b.draw(); });
         p5.touches.forEach(touch => {
             let t: XY = touch as XY;
@@ -111,7 +124,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
     function handlePointAction(point: P5.Vector) {
         let touchedBubble = bubbles.filter(b => b.containsPoint(point.x, point.y)).reverse()[0];
         if (!!touchedBubble) {
-            touchedBubble.touched();
+            touchedBubble.touched(touchedBubble === lastBubbleTouched);
             var index = bubbles.indexOf(touchedBubble);
             bubbles.splice(index, 1);
             bubbles.push(touchedBubble);
@@ -122,6 +135,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
                 bubbles.splice(index, 1);
                 bubbles.unshift(touchedBubble);
             });
+            lastBubbleTouched = touchedBubble;
         } else if (bubblesMoving) {
             bubbles.forEach(b => b.impactFrom(point))
         }
