@@ -21,7 +21,7 @@ export default class Bubble {
 
     constructor(p5: P5CanvasInstance, img: P5.Image, sounds: ISound[], strokeColor: any, vel: any) {
         this.p5 = p5;
-        this.img = img;
+        this.img = circularMask(p5, img);
         this.sounds = new CircularArray(sounds);
         sounds.forEach(s => s.onended(() => this.donePlayingSound()));
         this.pos = p5.createVector(0, 0);
@@ -29,13 +29,6 @@ export default class Bubble {
         this.rot = 0;
         this.spinPositive = true;
         this.strokeColor = strokeColor;
-        /*
-        TODO: figure out masking 
-        let shape = p5.createGraphics(p5.width,p5.height);
-        shape.ellipse(0,0,_ellipseDiameter, _ellipseDiameter);
-        console.log(shape.getURL());
-        //img.mask(shape);
-        */
     }
 
     onceDoneSpinning(callback: any) {
@@ -175,4 +168,16 @@ export default class Bubble {
         //console.log({bounceSound});
         Bubble._bounceSnd = bounceSound;
     }
+}
+
+function circularMask(p5: P5CanvasInstance, img: P5.Image): any {
+    const d = img.width;
+    let mask = p5.createGraphics(d,d);
+    mask.circle(d/2,d/2,d);
+    let maskImg = p5.createImage(d,d);
+    let imgSmall = p5.createImage(d,d);
+    imgSmall.copy(img,0,0,d,d,0,0,d,d);
+    maskImg.copy(mask,0,0,d,d,0,0,d,d);
+    imgSmall.mask(maskImg);
+    return imgSmall;
 }
