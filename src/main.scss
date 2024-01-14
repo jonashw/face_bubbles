@@ -30,5 +30,11 @@ body {
     color: #333;
     text-decoration: none;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-color:white;
+    outline: none;
+    border:none;
+    &:focus {
+      box-shadow: 0 5px 10px black;
+    }
   }
 }

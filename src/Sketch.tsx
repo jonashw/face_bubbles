@@ -16,7 +16,10 @@ export default function SketchRoute() {
       {appContext.hasUserProvidedInput
         ? <ReactP5Wrapper sketch={sketch}/>
         : <div className="wall-to-wall">
-            <button onClick={() => appContext.userHasProvidedInput()}>
+            <button
+              onClick={() => appContext.userHasProvidedInput()}
+              autoFocus={true}
+            >
                 Play
             </button>
           </div>}
