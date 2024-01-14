@@ -39,7 +39,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
         Promise.all(def.bubbles.map(async bd => {
             return new Bubble(
                 p5,
-                p5.loadImage("/assets/" + bd.img),
+                p5.loadImage("/assets/img/" + bd.img),
                 await Promise.all(bd.sounds.map(async fn => await Sound.loadSound(fn, def.defaultVoice))),
                 p5.color(bd.color[0], bd.color[1], bd.color[2]),
                 mildVelocity(p5.createVector(bd.velocity[0], bd.velocity[1])));
@@ -55,8 +55,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
             }
             arrangements.current.apply(bubbles);
         });
-        Sound.loadSound("basketball-bounce-wood-surface-thud-blastwavefx-29503.mp3")
-            .then(Bubble.setup);
+        Sound.loadSound("bounce.mp3").then(s => Bubble.setup(s));
     }
 
     p5.setup = () => {

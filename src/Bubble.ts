@@ -160,9 +160,10 @@ export default class Bubble {
     playBounceSound() {
         //console.log('bounce');
         if(!Bubble._bounceSnd){
+            //console.log('bounce sound not found');
             return;
         }
-        Bubble._bounceSnd.setVolume(0.5);
+        Bubble._bounceSnd.setVolume(0.25);
         Bubble._bounceSnd.play();
     }
     
@@ -171,7 +172,7 @@ export default class Bubble {
         return _outerDiameter;
     }
     static setup(bounceSound: ISound) {
-        console.log({bounceSound});
+        //console.log({bounceSound});
         Bubble._bounceSnd = bounceSound;
     }
 }

@@ -21,7 +21,7 @@ export async function loadSound(u: string | [string,string] | [string], defaultV
             ? `https://us-west1-jonashw-dev-personal-website.cloudfunctions.net/jonashw-dev-speech-synthesis-proxy?voice=${u[1]}&msg=${u[0]}`
             : `https://us-west1-jonashw-dev-personal-website.cloudfunctions.net/jonashw-dev-speech-synthesis-proxy?voice=${defaultVoice || "Justin"}&msg=${u[0]}`
         : u;
-    var url = relativeOrAbsoluteUrl.indexOf("http") === 0 ? relativeOrAbsoluteUrl : urlWithFullHost("/assets/sounds/" + relativeOrAbsoluteUrl);
+    var url = relativeOrAbsoluteUrl.indexOf("http") === 0 ? relativeOrAbsoluteUrl : urlWithFullHost("/assets/sound/" + relativeOrAbsoluteUrl);
     const r = await fetch(url,{redirect:'follow'});
     var blob = window.URL.createObjectURL(await r.blob());
     var actualUrl = r.redirected
@@ -67,6 +67,7 @@ class HowlSound implements ISound {
     }
 
     play() {
+        console.log('playing',this._howl);
         this._howl.play();
     }
     stop() {
