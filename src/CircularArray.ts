@@ -11,14 +11,14 @@ export default class CircularArray<T> {
 
     reset(){
         this.index = 0;
-        var c = this.getCurrent();
+        var c = this.current;
         if(!!this.onChange){
             this.onChange(c);
         }
         return c;
     }
 
-    getCurrent() {
+    get current() { 
         return this.items[this.index];
     }
 
@@ -27,7 +27,7 @@ export default class CircularArray<T> {
         if (this.index >= this.items.length) {
             this.index -= this.items.length;
         }
-        var c = this.getCurrent();
+        var c = this.current;
         if(!!this.onChange){
             this.onChange(c);
         }
@@ -38,7 +38,7 @@ export default class CircularArray<T> {
         if (this.index < 0) {
             this.index = this.items.length - 1;
         }
-        var c = this.getCurrent();
+        var c = this.current;
         if(!!this.onChange){
             this.onChange(c);
         }

@@ -48,7 +48,7 @@ export default class Bubble {
         p5.push();
         p5.translate(this.pos.x, this.pos.y);
         p5.rotate(this.rot);
-        this.sounds.getCurrent().isPlaying()
+        this.sounds.current.isPlaying()
             ? _ellipseDiameter * 1.5
             : _ellipseDiameter;
         p5.strokeWeight(_strokeWeight);
@@ -73,7 +73,7 @@ export default class Bubble {
         if(!wasLastBubbleTouched){
             this.sounds.reset();
         }
-        let s = this.sounds.getCurrent();
+        let s = this.sounds.current;
         if (s.isPlaying()) {
             return;
         }
@@ -135,7 +135,7 @@ export default class Bubble {
     }
 
     updateRotation() {
-        if (!this.sounds.getCurrent().isPlaying()) {
+        if (!this.sounds.current.isPlaying()) {
             return;
         }
         this.rot += (this.wasLastBubbleTouched ? -1 : 1) * 5;

@@ -14,6 +14,6 @@ export class Background {
     }
 
     draw() {
-        this.p5.background(this.colors.getCurrent());
+        this.p5.background(this.colors.current);
     }
 }

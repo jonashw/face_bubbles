@@ -53,7 +53,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
                     bubbles.push(b);
                 }
             }
-            arrangements.getCurrent().apply(bubbles);
+            arrangements.current.apply(bubbles);
         });
         Sound.loadSound("basketball-bounce-wood-surface-thud-blastwavefx-29503.mp3")
             .then(Bubble.setup);
@@ -151,11 +151,11 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
         }
         if (p5.keyCode == 187 /* + */ && unusedBubbles.length > 0) {
             bubbles.push(unusedBubbles.shift()!);
-            arrangements.getCurrent().apply(bubbles);
+            arrangements.current.apply(bubbles);
         }
         if (p5.keyCode == 189 /* - */ && bubbles.length > 0) {
             unusedBubbles.unshift(bubbles.pop()!);
-            arrangements.getCurrent().apply(bubbles);
+            arrangements.current.apply(bubbles);
         }
         let boostFactor = 1.1;
         if (p5.keyCode == p5.ESCAPE) {
