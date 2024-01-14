@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import './index.css'
+import './main.scss'
 import {RouterProvider, createBrowserRouter} from "react-router-dom";
 import Sketch, {SketchLoader} from './Sketch.tsx';
 import { AppContextProvider} from './AppContext';
