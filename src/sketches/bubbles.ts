@@ -4,6 +4,11 @@ import Bubble from "../Bubble";
 import P5 from "p5";
 import getArrangements from "../Arrangement";
 import * as Sound from "../Sound";
+
+type StageDefinition = {
+    bubbles: BubbleDefinition[];
+    defaultVoice: string | undefined;
+}
 type BubbleDefinition = {
     img: string;
     sounds: string[];
@@ -13,7 +18,7 @@ type BubbleDefinition = {
 
 type XY = {x:number, y:number};
 
-export default function sketch(p5: P5CanvasInstance) {
+const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
     var bubbles: Bubble[] = [];
     var unusedBubbles: Bubble[] = [];
     var bg: Background;
@@ -22,39 +27,30 @@ export default function sketch(p5: P5CanvasInstance) {
 
     var arrangements = getArrangements(p5);
 
-    p5.draw = () => {
-        p5.background(250);
-        p5.normalMaterial();
-        p5.push();
-        p5.rotateZ(p5.frameCount * 0.01);
-        p5.rotateX(p5.frameCount * 0.01);
-        p5.rotateY(p5.frameCount * 0.01);
-        p5.plane(100);
-        p5.pop();
-    };
-
-    function setupBubbles(bubbleDefs: BubbleDefinition[]){
+    function setTheStage(def: StageDefinition){
         var mildVelocity = function(v: P5.Vector){
             return v.normalize().mult(0.5);
         };
-        unusedBubbles = 
-            bubbleDefs.map(bd => 
-                new Bubble(
-                    p5,
-                    p5.loadImage("/assets/" + bd.img),
-                    bd.sounds.map(fn => Sound.loadSound("assets/sounds/" + fn)),
-                    p5.color(bd.color[0], bd.color[1], bd.color[2]),
-                mildVelocity(p5.createVector(bd.velocity[0], bd.velocity[1]))));
-
-        bubbles = [];
-        for(var i=0; i<6; i++){
-            var b = unusedBubbles.shift();
-            if(!!b){
-                bubbles.push(b);
+        Promise.all(def.bubbles.map(async bd => {
+            return new Bubble(
+                p5,
+                p5.loadImage("/assets/" + bd.img),
+                await Promise.all(bd.sounds.map(async fn => await Sound.loadSound(fn))),
+                p5.color(bd.color[0], bd.color[1], bd.color[2]),
+                mildVelocity(p5.createVector(bd.velocity[0], bd.velocity[1])));
+        })).then(bs => {
+            unusedBubbles = bs;
+            bubbles = [];
+            for(var i=0; i<6; i++){
+                var b = unusedBubbles.shift();
+                if(!!b){
+                    bubbles.push(b);
+                }
             }
-        }
-        arrangements.getCurrent().apply(bubbles);
-        Bubble.setup(Sound.loadSound("assets/sounds/impactcrash-basketball-bounce-wood-surface-thud-blastwavefx-29503.mp3"));
+            arrangements.getCurrent().apply(bubbles);
+        });
+        Sound.loadSound("assets/sounds/basketball-bounce-wood-surface-thud-blastwavefx-29503.mp3")
+            .then(Bubble.setup);
     }
 
     p5.setup = () => {
@@ -73,9 +69,9 @@ export default function sketch(p5: P5CanvasInstance) {
         p5.createCanvas(p5.windowWidth, p5.windowHeight);
         p5.ellipseMode(p5.CENTER);
 
-        fetch("/bubbles.json")
+        fetch(configJsonFile)
             .then(r => r.json())
-            .then((bs: BubbleDefinition[]) => setupBubbles(bs));
+            .then((def: StageDefinition) => setTheStage(def));
     }
 
     p5.draw = () => {
@@ -175,3 +171,5 @@ export default function sketch(p5: P5CanvasInstance) {
         p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
     }
 }
+
+export default getSketch;

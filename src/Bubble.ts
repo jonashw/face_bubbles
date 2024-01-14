@@ -22,7 +22,7 @@ export default class Bubble {
     strokeColor: any;
     _doneSpinningListeners: any[] = [];
 
-    constructor(p5: P5CanvasInstance, img: any, sounds: ISound[], strokeColor: any, vel: any) {
+    constructor(p5: P5CanvasInstance, img: P5.Image, sounds: ISound[], strokeColor: any, vel: any) {
         this.p5 = p5;
         this.img = img;
         this.sounds = new CircularArray(sounds);
@@ -32,6 +32,13 @@ export default class Bubble {
         this.rot = 0;
         this.spinPositive = true;
         this.strokeColor = strokeColor;
+        /*
+        TODO: figure out masking 
+        let shape = p5.createGraphics(p5.width,p5.height);
+        shape.ellipse(0,0,_ellipseDiameter, _ellipseDiameter);
+        console.log(shape.getURL());
+        //img.mask(shape);
+        */
     }
 
     static setup(bounceSound: ISound) {
@@ -81,7 +88,7 @@ export default class Bubble {
             this.rot = 0;
             s.stop();
         }
-        s.setVolume(0.7);
+        //s.setVolume(0.7);
         s.play();
     }
 

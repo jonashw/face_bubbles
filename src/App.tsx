@@ -1,9 +1,22 @@
-import { ReactP5Wrapper } from "@p5-wrapper/react";
-//import React from 'react'
-import sketch from './sketches/bubbles';
+import { Link } from "react-router-dom";
+
+const configIds: string[] = 
+  [
+    "original",
+    "2024"
+  ];
 
 function App() {
-  return <ReactP5Wrapper sketch={sketch} />;
+  return (
+    <div className="wall-to-wall">
+      {configIds.map(id => 
+        <Link
+          to={`/sketch/${id}`}
+          key={id}
+        >Play '{id}'</Link>
+      )}
+    </div>
+  );
 }
 
 export default App
