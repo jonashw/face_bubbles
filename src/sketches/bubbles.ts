@@ -32,6 +32,12 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
 
     var arrangements = getArrangements(p5);
 
+    function loadImage(url: string): Promise<P5.Image>{
+        return new Promise(resolve => {
+            p5.loadImage(url,img => resolve(img));
+        });
+    }
+
     function setTheStage(def: StageDefinition){
         var mildVelocity = function(v: P5.Vector){
             return v.normalize().mult(0.5);
@@ -39,7 +45,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
         Promise.all(def.bubbles.map(async bd => {
             return new Bubble(
                 p5,
-                p5.loadImage("/assets/img/" + bd.img),
+                await loadImage("/assets/img/" + bd.img),
                 await Promise.all(bd.sounds.map(async fn => await Sound.loadSound(fn, def.defaultVoice))),
                 p5.color(bd.color[0], bd.color[1], bd.color[2]),
                 mildVelocity(p5.createVector(bd.velocity[0], bd.velocity[1])));
