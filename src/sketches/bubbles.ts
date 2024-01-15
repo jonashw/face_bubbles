@@ -46,7 +46,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
             return new Bubble(
                 p5,
                 await loadImage("/assets/img/" + bd.img),
-                await Promise.all(bd.sounds.map(async fn => await Sound.loadSound(fn, def.defaultVoice))),
+                await Promise.all(bd.sounds.map(fn => Sound.loadSound(fn, def.defaultVoice))),
                 p5.color(bd.color[0], bd.color[1], bd.color[2]),
                 mildVelocity(p5.createVector(bd.velocity[0], bd.velocity[1])));
         })).then(bs => {
