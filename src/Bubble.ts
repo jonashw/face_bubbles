@@ -11,6 +11,7 @@ export default class Bubble {
     vel: P5.Vector;
     pos: P5.Vector;
     rot: number;
+    static commonRotation: number = 0;
     spinPositive: boolean;
     p5: P5CanvasInstance;
     strokeColor: any;
@@ -41,7 +42,7 @@ export default class Bubble {
         var { p5 } = this;
         p5.push();
         p5.translate(this.pos.x, this.pos.y);
-        p5.rotate(this.rot);
+        p5.rotate(this.rot + Bubble.commonRotation);
         p5.strokeWeight(Bubble.strokeWeight);
         p5.stroke(this.strokeColor);
         p5.noFill();

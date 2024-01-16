@@ -126,6 +126,9 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
             //beta: x-axis: [-180,180): ie. tilt the phone front to back (and upside down)
             //gamma: y-axis [-90,90): ie. tilt the phone left, right
 
+            let zRotation: number = roundTowardsZero(e.alpha || 0);
+            Bubble.commonRotation = zRotation;
+
             let xTiltStep = roundTowardsZero(
                 p5.map(e.gamma || 0,
                     -20, 20,
@@ -133,9 +136,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
 
             let yTiltStep = roundTowardsZero(
                 p5.map(e.beta || 0,
-                    /* Tilting the phone a certain angle away from your face 
-                    ** *feels* farther than the same angle *towards* your face. */
-                    -10, 20,
+                    -10, 10,
                     -gravity.stepCount, gravity.stepCount, true));
             
             if(xTiltStep != gravity.xStep.current){
@@ -251,16 +252,16 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
     p5.setShakeThreshold(30);
 
     let shakeHasCooledDown = true;
+    const shakeCoolDownMS = 500;
     p5.deviceShaken = () => {
         if(!shakeHasCooledDown){
             return;
         }
         shakeHasCooledDown = false;
-        bubblesMoving = !bubblesMoving;
-        if(!bubblesMoving){
-            arrangements.current.apply(bubbles);
-        }
-        setTimeout(() => shakeHasCooledDown = true, 2000);
+        //bubblesMoving = !bubblesMoving;
+        bubbles.forEach(b => b.vel = b.vel.normalize());
+        arrangements.current.apply(bubbles);
+        setTimeout(() => shakeHasCooledDown = true, shakeCoolDownMS);
     };
 }
 
