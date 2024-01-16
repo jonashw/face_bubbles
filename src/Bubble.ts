@@ -3,10 +3,6 @@ import CircularArray from "./CircularArray";
 import * as P5 from "p5";
 import {ISound} from "./Sound";
 
-const _ellipseDiameter = 150;
-const _strokeWeight = 10;
-const _outerDiameter = _ellipseDiameter + _strokeWeight;
-
 export default class Bubble {
     img: any;
     sounds: CircularArray<ISound>;
@@ -36,15 +32,14 @@ export default class Bubble {
     }
 
     draw() {
-        var d = _ellipseDiameter;
+        var d = this.sounds.current.isPlaying()
+                    ? Bubble.diameter * 1.125
+                    : Bubble.diameter;
         var { p5 } = this;
         p5.push();
         p5.translate(this.pos.x, this.pos.y);
         p5.rotate(this.rot);
-        this.sounds.current.isPlaying()
-            ? _ellipseDiameter * 1.5
-            : _ellipseDiameter;
-        p5.strokeWeight(_strokeWeight);
+        p5.strokeWeight(Bubble.strokeWeight);
         p5.stroke(this.strokeColor);
         p5.noFill();
         p5.ellipseMode(p5.CENTER);
@@ -95,7 +90,7 @@ export default class Bubble {
     updatePosition() {
         var { p5 } = this;
         let c = p5.keyIsDown(32 /* SPACE */) ? 0.25 : 1;
-        let ow = Bubble.diameter();
+        let ow = Bubble.outerDiameter;
         this.pos.x += this.vel.x * c;
         let xOver = this.pos.x + ow / 2 - p5.width;
         if (xOver > 0) {
@@ -142,7 +137,7 @@ export default class Bubble {
     }
 
     containsPoint(x: number, y: number) {
-        return this.p5.dist(this.pos.x, this.pos.y, x, y) <= _ellipseDiameter / 2;
+        return this.p5.dist(this.pos.x, this.pos.y, x, y) <= Bubble.outerDiameter / 2;
     };
 
     update() {
@@ -160,9 +155,16 @@ export default class Bubble {
         Bubble._bounceSnd.play();
     }
     
+    private static diameter = 150;
+    private static strokeWeight = 10;
+    public static get outerDiameter() { return Bubble.diameter + (1*Bubble.strokeWeight); }
+
     private static _bounceSnd: ISound | undefined;
-    static diameter() {
-        return _outerDiameter;
+    static setOuterDiameter(d: number) {
+        this.diameter = d - (1*this.strokeWeight);
+    }
+    static setDiameter(d: number) {
+        this.diameter = d;
     }
     static setup(bounceSound: ISound) {
         //console.log({bounceSound});

@@ -2,8 +2,9 @@ import { P5CanvasInstance } from "@p5-wrapper/react";
 import CircularArray from "./CircularArray";
 import Bubble from "./Bubble";
 import { range, zip, zipWith } from "./util";
+import P5 from "p5";
 
-type ArrangementFunction = (count: number, size: number) => [[number,number]];
+type ArrangementFunction = (count: number, size: number) => {positions: P5.Vector[], bubbleDiameter?: number};
 class Arrangement {
     name: string;
     fn: ArrangementFunction;
@@ -13,11 +14,13 @@ class Arrangement {
     }
     apply(bubbles: Bubble[]) {
         console.log('applying arrangement: ' + this.name);
+        var arranged = this.fn(bubbles.length, Bubble.outerDiameter);
         let bubblePositionPairs = 
             zip(
                 bubbles,
-                this.fn(bubbles.length, Bubble.diameter()));
+                arranged.positions);
         for( let [bubble, pos] of bubblePositionPairs){
+            Bubble.setOuterDiameter(arranged.bubbleDiameter || 150);
             bubble.pos = pos;
         }
     }
@@ -26,9 +29,9 @@ class Arrangement {
 export default (p5: P5CanvasInstance) =>
     new CircularArray<Arrangement>([
         {
-            name: "Rows",
-            fn: (count:number, _:number) => {
-                let rowConfigurations = [
+            name: "Adaptive",
+            fn: (count: number, _:number) => {
+                const flowConfigs = [
                     [],
                     [1],
                     [2],
@@ -46,19 +49,52 @@ export default (p5: P5CanvasInstance) =>
                     [5,4,5],
                     [5,5,5]
                 ];
+
                 // Important: It is assumed that `count` will be between 0 and 15!
-                let rowConfig = rowConfigurations[count];
-                let yOffset = Math.floor(p5.height/(rowConfig.length + 1));
-                let positions: any  = [];
-                rowConfig.forEach((rowSize,rowIndex) => {
-                    let y = yOffset * (rowIndex + 1);
-                    let xOffset = Math.floor(p5.width/(rowSize + 1));
-                    for(var xIndex=1; xIndex <= rowSize; xIndex++){
-                    let x = xOffset * xIndex;
-                    positions.push(p5.createVector(x,y));
-                    }
+                const flowConfig = flowConfigs[count];
+
+                const aspectRatio = p5.width/p5.height;
+
+                const [
+                    createVector,
+                    primaryDimensionLength,
+                    secondaryDimensionLength
+                ] = 
+                    // the layout pattern operates according to which fits best to the current screen size: 
+                    aspectRatio < 1 
+                    ? [ //tall/narrow screen -> columns 
+                        (p:number,s:number) => p5.createVector(s,p),
+                        p5.height,
+                        p5.width
+                    ] 
+                    : [ //short/wide screen -> rows
+                        (p:number,s:number) => p5.createVector(p,s),
+                        p5.width,
+                        p5.height
+                    ];
+
+                var maxBubblePrimaryDimensionLength  = Math.floor(primaryDimensionLength/Math.max(...flowConfig));
+                var maxBubbleSecondaryDimensionLength = Math.floor(secondaryDimensionLength/flowConfig.length);
+                var optimalBubbleDiameter = Math.floor(Math.min(maxBubblePrimaryDimensionLength, maxBubbleSecondaryDimensionLength));
+                let secondaryDimensionOffset = Math.ceil(secondaryDimensionLength/(flowConfig.length));
+                var bubbleRadius = optimalBubbleDiameter/2;
+
+                console.log({
+                    primaryDimensionLength,
+                    secondaryDimensionLength,
+                    maxBubblePrimaryDimensionLength,
+                    maxBubbleSecondaryDimensionLength,
+                    optimalBubbleDiameter
                 });
-                return positions;
+                let positions = flowConfig.flatMap((flowUnitCount,flowUnitIndex) => {
+                    let s = (secondaryDimensionOffset * flowUnitIndex) + bubbleRadius;
+                    let primaryOffset = Math.ceil(primaryDimensionLength/flowUnitCount);
+                    return Array(flowUnitCount).fill(null).map((_, primaryIndex) => {
+                        let p = (primaryOffset * primaryIndex) + bubbleRadius;
+                        return createVector(p,s);
+                    });
+                });
+                return {positions, bubbleDiameter: optimalBubbleDiameter};
             }
         },
         {
@@ -67,13 +103,14 @@ export default (p5: P5CanvasInstance) =>
                 let r = size/2;
                 let xOffset = Math.floor((p5.width  - size)/Math.max(count - 1, 1));
                 let yOffset = Math.floor((p5.height - size)/Math.max(count - 1, 1));
-                return range(0,count).map(n => {
+                var positions = range(0,count).map(n => {
                     let pos = p5.createVector(
                     n*xOffset + r,
                     n*yOffset + r);
                     //console.log(`width:${width}, height:${height}, r:${r}, pos.x:${pos.x}, pos.y:${pos.y}, bottom-right-corner.x:${pos.x + r}, bottom-right-corner.y:${pos.y + r}`);
                     return pos;
                 });
+                return {positions};
             },
         },
         {
@@ -84,7 +121,8 @@ export default (p5: P5CanvasInstance) =>
                 var dy = Math.floor((p5.height - size)/Math.max(count - 1, 1));
                 var xs = range(0,count).map(n => n*dx + r);
                 var ys = range(count-1,0).map(n => n*dy + r);
-                return zipWith(xs, ys, p5.createVector);
+                var positions = zipWith(xs, ys, p5.createVector);
+                return {positions};
             }
         },
         {
@@ -113,5 +151,6 @@ function chevronArrangement(p5: P5CanvasInstance, count:number,size:number,posit
         _ys1.pop();
     }
     var ys = Array.prototype.concat.call([], _ys1, _ys2);
-    return zipWith(xs, ys, p5.createVector);
+    var positions = zipWith(xs, ys, p5.createVector);
+    return {positions};
 }

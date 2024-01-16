@@ -166,6 +166,9 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
         if (p5.keyCode == p5.ESCAPE) {
             bubblesMoving = !bubblesMoving;
         }
+        if (p5.key === ' ') {
+            bubblesMoving = !bubblesMoving;
+        }
         if (p5.keyCode == p5.ENTER) {
             p5.fullscreen(!p5.fullscreen());
         }
@@ -188,7 +191,25 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
 
     p5.windowResized = () => {
         p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
+        if(!bubblesMoving){
+            arrangements.current.apply(bubbles);
+        }
     }
+
+    p5.setShakeThreshold(30);
+
+    let shakeHasCooledDown = true;
+    p5.deviceShaken = () => {
+        if(!shakeHasCooledDown){
+            return;
+        }
+        shakeHasCooledDown = false;
+        bubblesMoving = !bubblesMoving;
+        if(!bubblesMoving){
+            arrangements.current.apply(bubbles);
+        }
+        setTimeout(() => shakeHasCooledDown = true, 2000);
+    };
 }
 
 export default getSketch;
