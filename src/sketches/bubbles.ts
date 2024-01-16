@@ -160,7 +160,23 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
         }
         for(let b of bubbles){
             b.updatePosition(); 
+            var againstLeft = Math.abs(b.pos.x - Bubble.outerDiameter/2) < 1;
+            var againstRight = Math.abs(b.pos.x + Bubble.outerDiameter/2 - p5.width) < 1;
+            var againstXEdge = (againstLeft || againstRight);
+            var againstTop = Math.abs(b.pos.y - Bubble.outerDiameter/2) < 1;
+            var againstBottom = Math.abs(b.pos.y + Bubble.outerDiameter/2 - p5.height) < 1;
+            var againstYEdge = (againstTop || againstBottom);
+            var notReallyMovingX = Math.abs(b.vel.x) < 0.1;
+            var movingSomewhatX = !notReallyMovingX;
+            var notReallyMovingY = Math.abs(b.vel.y) < 0.1;
+            var movingSomewhatY = !notReallyMovingY;
+            if(!againstXEdge && movingSomewhatX){
+                //
+            }
             b.vel.x += gravity.displayValue.current.x;
+            if(!againstYEdge && movingSomewhatY){
+                //
+            }
             b.vel.y += gravity.displayValue.current.y;
         }
     }
