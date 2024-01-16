@@ -119,6 +119,36 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
         });
     }
 
+    if (window.DeviceOrientationEvent) {
+        window.addEventListener("deviceorientation", (e: DeviceOrientationEvent) => {
+            //console.log("deviceorientation",e.alpha?.toFixed(1), e.beta?.toFixed(1), e.gamma?.toFixed(1));
+            //alpha: z-axis: [0,360): ie. rotate the phone while sitting face-up on table
+            //beta: x-axis: [-180,180): ie. tilt the phone front to back (and upside down)
+            //gamma: y-axis [-90,90): ie. tilt the phone left, right
+
+            let xTiltStep = roundTowardsZero(
+                p5.map(e.gamma || 0,
+                    -20, 20,
+                    -gravity.stepCount, gravity.stepCount, true));
+
+            let yTiltStep = roundTowardsZero(
+                p5.map(e.beta || 0,
+                    /* Tilting the phone a certain angle away from your face 
+                    ** *feels* farther than the same angle *towards* your face. */
+                    -10, 20,
+                    -gravity.stepCount, gravity.stepCount, true));
+            
+            if(xTiltStep != gravity.xStep.current){
+                gravity.xStep.update(_ => xTiltStep);
+            }
+            if(yTiltStep != gravity.yStep.current){
+                gravity.yStep.update(_ => yTiltStep);
+            }
+        }, true);
+    }
+
+    const roundTowardsZero = (n: number) =>
+        n < 0 ? Math.ceil(n) : Math.floor(n);
     function update(){
         bg.update();
         for(let b of bubbles){
@@ -200,10 +230,10 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
             p5.fullscreen(!p5.fullscreen());
         }
         switch(p5.keyCode){
-            case p5.   UP_ARROW: gravity.ys.prev(); break;
-            case p5. DOWN_ARROW: gravity.ys.next(); break;
-            case p5. LEFT_ARROW: gravity.xs.prev(); break;
-            case p5.RIGHT_ARROW: gravity.xs.next(); break;
+            case p5.   UP_ARROW: gravity.yStep.update(ys => ys-1); break;
+            case p5. DOWN_ARROW: gravity.yStep.update(ys => ys+1); break;
+            case p5. LEFT_ARROW: gravity.xStep.update(xs => xs-1); break;
+            case p5.RIGHT_ARROW: gravity.xStep.update(xs => xs+1); break;
         }
         if(p5.key === '0'){
             gravity.reset();

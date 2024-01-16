@@ -32,6 +32,7 @@ export function createArrowImage(
         g.fill(color);
         g.translate(center);
         g.rotate(heading);
+        g.strokeCap(p5.SQUARE);
         g.strokeWeight(p5.map(arrowVector.mag(), 0, maxMagnitude, 4, s/4));
         g.line(0, 0, -lineLength, 0);
         let arrowSize = p5.map(arrowVector.mag(), -maxMagnitude,maxMagnitude, s/20, s/2, true);
