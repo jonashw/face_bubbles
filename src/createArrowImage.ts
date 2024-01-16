@@ -18,12 +18,12 @@ export function createArrowImage(
     const g = p5.createGraphics(s, s);
     const center = p5.createVector(g.width / 2, g.height / 2);
     g.stroke(color);
-    g.noFill();
     //g.strokeWeight(1);
     //g.rect(0,0,g.width,g.height);
     g.strokeWeight(4);
     g.angleMode(p5.DEGREES);
     if (arrowVector.x === 0 && arrowVector.y === 0) {
+        g.strokeWeight(4);
         g.noFill();
         g.circle(center.x, center.y, s / 4);
     } else {
@@ -32,8 +32,10 @@ export function createArrowImage(
         g.fill(color);
         g.translate(center);
         g.rotate(heading);
-        let arrowSize = p5.map(arrowVector.mag(), -maxMagnitude,maxMagnitude, s/20, s/3, true);
+        g.strokeWeight(p5.map(arrowVector.mag(), 0, maxMagnitude, 4, s/4));
         g.line(0, 0, -lineLength, 0);
+        let arrowSize = p5.map(arrowVector.mag(), -maxMagnitude,maxMagnitude, s/20, s/2, true);
+        g.noStroke();
         //g.translate(mag - arrowSize, 0);
         g.triangle(
             0, arrowSize / 2,
