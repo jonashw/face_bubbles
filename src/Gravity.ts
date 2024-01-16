@@ -18,8 +18,8 @@ export class Gravity {
         const negativeSteps = [...positiveSteps].reverse().map(s => -s);
         this.xs = new TraversableArray(negativeSteps, 0, positiveSteps, false)
         this.ys = new TraversableArray(negativeSteps, 0, positiveSteps, false);
-        this.xs.addObserver(x => console.log({x}));
-        this.ys.addObserver(y => console.log({y}));
+        //this.xs.addObserver(x => console.log({x}));
+        //this.ys.addObserver(y => console.log({y}));
         const value =
             ImmutableObservable.react2(
                 this.xs,

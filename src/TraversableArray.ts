@@ -35,7 +35,6 @@ export default class TraversableArray<T> extends ImmutableObservable<T> {
 
     next() {
         if(this.index + 1 == this.items.length && !this.canWrap){
-            console.log('next DENIED');
             return;
         }
         this.index += 1;
@@ -50,7 +49,6 @@ export default class TraversableArray<T> extends ImmutableObservable<T> {
 
     prev() {
         if(this.index - 1 == -1 && !this.canWrap){
-            console.log('prev DENIED');
             return;
         }
         this.index -= 1;
