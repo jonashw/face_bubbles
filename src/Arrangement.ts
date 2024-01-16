@@ -26,6 +26,24 @@ class Arrangement {
     }
 }
 
+export function gridArrangment(
+    p5: P5CanvasInstance,
+    gw: number, gh: number,
+    uw: number, uh: number
+): P5.Vector[] {
+    const ucountx = Math.floor(gw / uw);
+    const ucounty = Math.floor(gh / uh);
+    const padx = (gw - (ucountx * uw))/2;
+    const pady = (gh - (ucounty * uh))/2;
+    const xs = Array(ucountx).fill(null);
+    const ys = Array(ucounty).fill(null);
+    return xs.flatMap((_,x) => 
+        ys.map((_,y) => 
+            p5.createVector(
+                x * uw + padx,
+                y * uh + pady)));
+}
+
 export default (p5: P5CanvasInstance) =>
     new CircularArray<Arrangement>([
         {

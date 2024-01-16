@@ -1,25 +1,24 @@
-export default class CircularArray<T> {
+import { ImmutableObservable } from "./Observable";
+
+export default class CircularArray<T> extends ImmutableObservable<T> {
     private items: T[];
     public count: number;
-    private index: number = 0;
-    public onChange: ((item: T) => void) | undefined = undefined;
+    private index: number;
 
     constructor(items: T[]) {
+        var index = 0;
+        super(items[index]);
+        this.index = index;
         this.items = items;
         this.count = items.length;
     }
 
     reset(){
         this.index = 0;
-        var c = this.current;
-        if(!!this.onChange){
-            this.onChange(c);
-        }
+        var c = this.items[this.index];
+        this._current = c;
+        this.notify(c);
         return c;
-    }
-
-    get current() { 
-        return this.items[this.index];
     }
 
     next() {
@@ -27,21 +26,20 @@ export default class CircularArray<T> {
         if (this.index >= this.items.length) {
             this.index -= this.items.length;
         }
-        var c = this.current;
-        if(!!this.onChange){
-            this.onChange(c);
-        }
+        var c = this.items[this.index];
+        this._current = c;
+        this.notify(c);
         return c;
     }
+
     prev() {
         this.index -= 1;
         if (this.index < 0) {
             this.index = this.items.length - 1;
         }
-        var c = this.current;
-        if(!!this.onChange){
-            this.onChange(c);
-        }
+        var c = this.items[this.index];
+        this._current = c;
+        this.notify(c);
         return c;
     }
 }

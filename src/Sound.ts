@@ -81,7 +81,7 @@ class HowlSound implements ISound {
     }
 
     play() {
-        console.log('playing',this._howl);
+        //console.log('playing',this._howl);
         this._howl.play();
     }
     stop() {

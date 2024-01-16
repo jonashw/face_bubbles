@@ -2,6 +2,7 @@ import { P5CanvasInstance } from "@p5-wrapper/react";
 import CircularArray from "./CircularArray";
 import * as P5 from "p5";
 import {ISound} from "./Sound";
+import { circularMask } from "./circularMask";
 
 export default class Bubble {
     img: any;
@@ -43,7 +44,10 @@ export default class Bubble {
         p5.stroke(this.strokeColor);
         p5.noFill();
         p5.ellipseMode(p5.CENTER);
+        //p5.push();
+        //p5.blendMode(p5.DIFFERENCE);
         p5.ellipse(0, 0, d, d);
+        //p5.pop();
         p5.image(this.img, -d / 2, -d / 2, d, d);
         p5.pop();
     }
@@ -86,6 +90,8 @@ export default class Bubble {
         let inverse = this.p5.createVector(-deltaV.x, -deltaV.y);
         this.vel = P5.Vector.add(this.vel, inverse);
     };
+
+    //handleCollision(v: P5.Vector){ }
 
     updatePosition() {
         var { p5 } = this;
@@ -170,16 +176,4 @@ export default class Bubble {
         //console.log({bounceSound});
         Bubble._bounceSnd = bounceSound;
     }
-}
-
-function circularMask(p5: P5CanvasInstance, img: P5.Image): any {
-    const d = img.width;
-    let mask = p5.createGraphics(d,d);
-    mask.circle(d/2,d/2,d);
-    let maskImg = p5.createImage(d,d);
-    let imgSmall = p5.createImage(d,d);
-    imgSmall.copy(img,0,0,d,d,0,0,d,d);
-    maskImg.copy(mask,0,0,d,d,0,0,d,d);
-    imgSmall.mask(maskImg);
-    return imgSmall;
 }

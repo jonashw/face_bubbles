@@ -17,8 +17,7 @@
                 "mama-hi-1.wav",
                 "mama-buh-bye.wav"
             ],
-            "color": [238, 255, 148],
-            "velocity":[2,2]
+            "color": [238, 255, 148]
         },
         {
             "img": "papa1.png",
@@ -27,19 +26,17 @@
                 "papa-hi-1.wav",
                 "papa-buh-bye-1.wav"
             ],
-            "color": [102, 55, 148],
-            "velocity":[2, -2]
+            "color": [102, 55, 148]
         },
         {
-        "img":"sawyer1.png",
-        "sounds":[
-            "sawyer-by-papa.wav",
-            "voice-prompts-greetings-greetings-child-boy-hi-human-voice-speaking-2.mp3",
-            "other-human-girl-laughs-4-times-faster-and-higher-nightingale-music-productions-12449.mp3",
-            "voice-prompts-pain-pain-child-girl-ouch-human-voice.mp3"
-        ],
-        "color":[170,255,148],
-        "velocity":[4,0]
+            "img":"sawyer1.png",
+            "sounds":[
+                "sawyer-by-papa.wav",
+                "voice-prompts-greetings-greetings-child-boy-hi-human-voice-speaking-2.mp3",
+                "other-human-girl-laughs-4-times-faster-and-higher-nightingale-music-productions-12449.mp3",
+                "voice-prompts-pain-pain-child-girl-ouch-human-voice.mp3"
+            ],
+            "color":[170,255,148]
         },
         {
             "img": "fetus1.png",
@@ -47,8 +44,7 @@
                 "baby-by-papa.wav",
                 "fetus-1.wav"
             ],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
+            "color":[43,255,148]
         },
         {
             "img":"maizy1.png",
@@ -57,8 +53,7 @@
                 "domestic-animals-dog-bark-jackrussel-chihuahua-fienup-008.mp3",
                 "speech-girl-says-huh-as-if-unsure-higher-nightingale-music-productions-12446.mp3"
             ],
-        "color": [43,255,148],
-        "velocity":[3,1]
+            "color": [43,255,148]
         },
         {
             "img": "cooper1.png",
@@ -66,62 +61,52 @@
                 "cooper-by-papa.wav",
                 "dogs-dog-bark-springer-spaniel-1.mp3"
             ],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
+            "color":[43,255,148]
         },
         {
             "img":"pasta1.png",
             "sounds":["pasta-1.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
+            "color":[43,255,148]
         },
         {
             "img":"water3.png",
             "sounds":["water-1.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
+            "color":[43,255,148]
         },
         {
             "img":"salsa2.png",
             "sounds":["salsa-1.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
+            "color":[43,255,148]
         },
         {
             "img":"gorilla1.png",
             "sounds":["gorilla-by-papa.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
+            "color":[43,255,148]
         },
         {
             "img":"monkey1.png",
             "sounds":[ "monkey-by-papa.wav" ],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
+            "color":[43,255,148]
         },
         {
             "img":"elephant1.png",
             "sounds":["elephant-by-papa.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
+            "color":[43,255,148]
         },
         {
             "img":"koala1.png",
             "sounds":["koala-by-papa.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
+            "color":[43,255,148]
         },
         {
             "img":"turtle1.png",
             "sounds":["turtle-by-papa.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
+            "color":[43,255,148]
         },
         {
             "img":"lion1.png",
             "sounds":["lion-by-papa.wav"],
-            "color":[43,255,148],
-            "velocity":[-1.5,2.5]
+            "color":[43,255,148]
         }
     ]
 }
