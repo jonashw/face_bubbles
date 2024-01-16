@@ -51,7 +51,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
                 p5.color(bd.color[0], bd.color[1], bd.color[2]),
                 p5.createVector(
                     (Math.random() > 0.5 ? -1 : 1) * Math.random(),
-                    (Math.random() > 0.5 ? -1 : 1) * Math.random()).mult(1/20)
+                    (Math.random() > 0.5 ? -1 : 1) * Math.random()).mult(1/10)
             );
         })).then(bs => {
             settingTheStage = false;

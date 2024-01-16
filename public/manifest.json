@@ -1,0 +1,27 @@
+{
+    "theme_color": "#8936FF",
+    "background_color": "#2EC6FE",
+    "icons": [
+        {
+            "purpose": "maskable",
+            "sizes": "512x512",
+            "src": "icon512_maskable.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "any",
+            "sizes": "512x512",
+            "src": "icon512_rounded.png",
+            "type": "image/png"
+        }
+    ],
+    "orientation": "any",
+    "display": "fullscreen",
+    "dir": "auto",
+    "lang": "en-US",
+    "name": "Face Bubbles",
+    "short_name": "Bubbles",
+    "start_url": "https://bubbles.jonashw.dev",
+    "scope": "https://bubbles.jonashw.dev",
+    "description": "Poke some face bubbles and watch them bounce around"
+}
