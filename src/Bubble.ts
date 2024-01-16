@@ -4,6 +4,8 @@ import * as P5 from "p5";
 import {ISound} from "./Sound";
 import { circularMask } from "./circularMask";
 
+const bounceDampeningCoefficient: number = 0.75;
+
 export default class Bubble {
     name: string;
     img: P5.Image;
@@ -95,7 +97,6 @@ export default class Bubble {
     };
 
     //handleCollision(v: P5.Vector){ }
-
     updatePosition() {
         var { p5 } = this;
         let c = p5.keyIsDown(32 /* SPACE */) ? 0.25 : 1;
@@ -105,12 +106,20 @@ export default class Bubble {
         if (xOver > 0) {
             this.vel.x = -this.vel.x;
             this.pos.x -= (xOver + 1);
+            this.vel.mult(bounceDampeningCoefficient);
+            if(this.vel.mag() < bounceDampeningCoefficient){
+                this.vel.mult(0);
+            }
             this.playBounceSound();
         } else {
             let xUnder = this.pos.x - ow / 2;
             if (xUnder < 0) {
                 this.vel.x = -this.vel.x;
                 this.pos.x -= (xUnder - 1);
+                this.vel.mult(bounceDampeningCoefficient);
+                if(this.vel.mag() < bounceDampeningCoefficient){
+                    this.vel.mult(0);
+                }
                 this.playBounceSound();
             }
         }
