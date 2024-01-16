@@ -41,6 +41,7 @@ export default class Bubble {
         var d = this.sounds.current.isPlaying()
                     ? Bubble.diameter * 1.125
                     : Bubble.diameter;
+        let r = d/2;
         var { p5 } = this;
         p5.push();
         p5.translate(this.pos.x, this.pos.y);
@@ -53,7 +54,7 @@ export default class Bubble {
         //p5.blendMode(p5.DIFFERENCE);
         p5.ellipse(0, 0, d, d);
         //p5.pop();
-        p5.image(this.img, -d / 2, -d / 2, d, d);
+        p5.image(this.img, r, r, d, d);
         p5.pop();
     }
 
@@ -87,7 +88,7 @@ export default class Bubble {
     }
 
     impactFrom(impactPos: any) {
-        let funFactor = 5000;
+        let funFactor = 10000;
         let impactOffset = P5.Vector.sub(impactPos, this.pos);
         let d = impactOffset.mag();
         let intensity = 1 / (d * d); //Source: https://www.nde-ed.org/EducationResources/CommunityCollege/Radiography/Physics/inversesquare.htm
@@ -107,7 +108,7 @@ export default class Bubble {
             this.vel.x = -this.vel.x;
             this.pos.x -= (xOver + 1);
             this.vel.mult(bounceDampeningCoefficient);
-            if(this.vel.mag() < bounceDampeningCoefficient){
+            if(this.vel.mag() < 1-bounceDampeningCoefficient){
                 this.vel.mult(0);
             }
             this.playBounceSound();
