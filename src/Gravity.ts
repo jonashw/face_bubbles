@@ -25,13 +25,13 @@ export class Gravity {
                 this.xs,
                 this.ys,
                 (x,y) => new ImmutableVector(x,y));
-        value.addObserver(v => console.log({v}));
+        //value.addObserver(v => console.log({v}));
         const displayValue = 
             ImmutableObservable.react(
                 value,
                 v => v.mult(displayCoefficient))
-        console.log({value,displayValue});
-        displayValue.addObserver(dv => console.log({dv}));
+        //console.log({value,displayValue});
+        //displayValue.addObserver(dv => console.log({dv}));
         this.value = value;
         this.displayValue = displayValue;
     }
