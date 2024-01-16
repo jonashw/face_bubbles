@@ -5,6 +5,7 @@ export type StageDefinition = {
 };
 
 type BubbleDefinition = {
+    name: string;
     img: string;
     sounds: (string | [string,string] | [string])[];
     color: [number,number,number];

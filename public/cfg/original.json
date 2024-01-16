@@ -2,6 +2,7 @@
     "showFirstNBubbles": 6,
     "bubbles":[
         {
+            "name":"Mama",
             "img": "mama1.png",
             "original_sounds": [
                 "mama-hello-1.wav",
@@ -20,6 +21,7 @@
             "color": [238, 255, 148]
         },
         {
+            "name":"Papa",
             "img": "papa1.png",
             "sounds": [
                 "papa-by-papa.wav",
@@ -29,6 +31,7 @@
             "color": [102, 55, 148]
         },
         {
+            "name":"Sawyer",
             "img":"sawyer1.png",
             "sounds":[
                 "sawyer-by-papa.wav",
@@ -39,6 +42,7 @@
             "color":[170,255,148]
         },
         {
+            "name":"Baby",
             "img": "fetus1.png",
             "sounds":[
                 "baby-by-papa.wav",
@@ -47,6 +51,7 @@
             "color":[43,255,148]
         },
         {
+            "name":"Maizy",
             "img":"maizy1.png",
             "sounds":[
                 "maizy-by-papa.wav",
@@ -56,6 +61,7 @@
             "color": [43,255,148]
         },
         {
+            "name":"Cooper",
             "img": "cooper1.png",
             "sounds": [
                 "cooper-by-papa.wav",
@@ -64,46 +70,55 @@
             "color":[43,255,148]
         },
         {
+            "name":"Pasta",
             "img":"pasta1.png",
             "sounds":["pasta-1.wav"],
             "color":[43,255,148]
         },
         {
+            "name":"Water",
             "img":"water3.png",
             "sounds":["water-1.wav"],
             "color":[43,255,148]
         },
         {
+            "name":"Salsa",
             "img":"salsa2.png",
             "sounds":["salsa-1.wav"],
             "color":[43,255,148]
         },
         {
+            "name":"Gorilla",
             "img":"gorilla1.png",
             "sounds":["gorilla-by-papa.wav"],
             "color":[43,255,148]
         },
         {
+            "name":"Monkey",
             "img":"monkey1.png",
             "sounds":[ "monkey-by-papa.wav" ],
             "color":[43,255,148]
         },
         {
+            "name":"Elephant",
             "img":"elephant1.png",
             "sounds":["elephant-by-papa.wav"],
             "color":[43,255,148]
         },
         {
+            "name":"Koala",
             "img":"koala1.png",
             "sounds":["koala-by-papa.wav"],
             "color":[43,255,148]
         },
         {
+            "name":"Turtle",
             "img":"turtle1.png",
             "sounds":["turtle-by-papa.wav"],
             "color":[43,255,148]
         },
         {
+            "name":"Lion",
             "img":"lion1.png",
             "sounds":["lion-by-papa.wav"],
             "color":[43,255,148]

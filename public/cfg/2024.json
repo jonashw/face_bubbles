@@ -3,41 +3,49 @@
     "defaultVoice":"Salli",
     "bubbles": [
         {
+            "name": "Mama",
             "img": "becky2024.png",
             "sounds": [ ["Mama"], ["Becky"], ["Mama bear"] ],
             "color": [238, 255, 148]
         },
         {
+            "name": "Papa",
             "img": "jon2024.png",
             "sounds": [ ["Papa"], ["Jon"], ["Papa bear"]],
             "color": [102, 55, 148]
         },
         {
+            "name": "Sawyer",
             "img":"sawyer2024.png",
             "sounds":[["Sawyer"],["Brother"],["bro-bro"]],
             "color":[170,255,148]
         },
         {
+            "name": "Fiona",
             "img":"fiona2024.png",
             "sounds":[["Fiona"], ["sister"],["na-na"]],
             "color":[170,255,148]
         },
         {
+            "name": "Rowan",
             "img": "rowan2024.png",
             "sounds":[["Rowan"],["row row"],["babbie"]],
             "color":[43,255,148]
         },
         {
+            "name": "Grandma J",
             "img":"jayma2024.png",
             "sounds":[["Grandma J"], ["Jayma"]],
             "color":[43,255,148]
         },
         {
+            "name": "Maizy",
             "img":"maizy1.png",
             "sounds":[["Maizy"],["dog"],["bark"],["woof"]],
             "color": [43,255,148]
         },
         {
+            "name": "Cooper",
             "img": "cooper1.png",
             "sounds": [ ["Cooper"], ["dog"],["bark"],["woof"] ],
             "color":[43,255,148]

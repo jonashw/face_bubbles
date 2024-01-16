@@ -45,6 +45,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
         Promise.all(def.bubbles.map(async (bd) => {
             return new Bubble(
                 p5,
+                bd.name,
                 await loadImage("/assets/img/" + bd.img),
                 await Promise.all(bd.sounds.map(fn => Sound.loadSound(fn, def.defaultVoice))),
                 p5.color(bd.color[0], bd.color[1], bd.color[2]),
@@ -62,6 +63,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
                     bubbles.push(b);
                 }
             }
+            console.log({bubbles});
             arrangements.current.apply(bubbles);
         });
         Sound.loadSound("bounce.mp3").then(s => Bubble.setup(s));
@@ -148,6 +150,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
     function handlePointAction(point: P5.Vector) {
         let touchedBubble = bubbles.filter(b => b.containsPoint(point.x, point.y)).reverse()[0];
         if (!!touchedBubble) {
+            console.log({touchedBubble});
             touchedBubble.touched(touchedBubble === lastBubbleTouched);
             var index = bubbles.indexOf(touchedBubble);
             bubbles.splice(index, 1);

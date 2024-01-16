@@ -5,10 +5,11 @@ import {ISound} from "./Sound";
 import { circularMask } from "./circularMask";
 
 export default class Bubble {
-    img: any;
+    name: string;
+    img: P5.Image;
     sounds: CircularArray<ISound>;
-    vel: any;
-    pos: any;
+    vel: P5.Vector;
+    pos: P5.Vector;
     rot: number;
     spinPositive: boolean;
     p5: P5CanvasInstance;
@@ -16,7 +17,8 @@ export default class Bubble {
     _doneSpinningListeners: any[] = [];
     wasLastBubbleTouched = false;
 
-    constructor(p5: P5CanvasInstance, img: P5.Image, sounds: ISound[], strokeColor: any, vel: any) {
+    constructor(p5: P5CanvasInstance, name:string, img: P5.Image, sounds: ISound[], strokeColor: any, vel: any) {
+        this.name = name;
         this.p5 = p5;
         this.img = circularMask(p5, img);
         this.sounds = new CircularArray(sounds);
@@ -157,7 +159,8 @@ export default class Bubble {
             //console.log('bounce sound not found');
             return;
         }
-        Bubble._bounceSnd.setVolume(0.25);
+        var volume = this.p5.map(this.vel.mag(), 0, 30, .1, 1, true);
+        Bubble._bounceSnd.setVolume(volume);
         Bubble._bounceSnd.play();
     }
     
