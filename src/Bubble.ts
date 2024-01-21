@@ -54,7 +54,7 @@ export default class Bubble {
         //p5.blendMode(p5.DIFFERENCE);
         p5.ellipse(0, 0, d, d);
         //p5.pop();
-        p5.image(this.img, r, r, d, d);
+        p5.image(this.img, -r, -r, d, d);
         p5.pop();
     }
 
