@@ -32,6 +32,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
     var bubblesMoving = true;
     var touchColor: P5.Color;
     var lastBubbleTouched: Bubble | undefined = undefined;
+    var debug = false;
 
     var arrangements = getArrangements(p5);
 
@@ -110,7 +111,7 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
         
         p5.pop();
         update();
-        bubbles.forEach(function(b){ b.draw(); });
+        bubbles.forEach(function(b){ b.draw(debug); });
         p5.touches.forEach(touch => {
             let t: any = touch as any;
             p5.noStroke();
@@ -219,6 +220,9 @@ const getSketch = (configJsonFile: string) => (p5: P5CanvasInstance) => {
         //console.log('key:', p5.key, 'keyCode:', p5.keyCode);
         if (p5.key.toLowerCase() == 'g') {
             gravity.reset();
+        }
+        if(p5.key == 'd'){
+            debug = !debug;
         }
         if(p5.key == 'a'){
             arrangements.current.apply(bubbles);

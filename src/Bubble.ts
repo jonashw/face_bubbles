@@ -4,7 +4,10 @@ import * as P5 from "p5";
 import {ISound} from "./Sound";
 import { circularMask } from "./circularMask";
 
-const bounceDampeningCoefficient: number = 0.75;
+const bounceDampeningCoefficient: number = 1/3;
+
+const vec2string = (v: P5.Vector): string =>
+    `(${v.x.toFixed(1)},${v.y.toFixed(1)})`;
 
 export default class Bubble {
     name: string;
@@ -37,7 +40,7 @@ export default class Bubble {
         this._doneSpinningListeners = [callback];
     }
 
-    draw() {
+    draw(debug: boolean = false) {
         var d = this.sounds.current.isPlaying()
                     ? Bubble.diameter * 1.125
                     : Bubble.diameter;
@@ -55,8 +58,19 @@ export default class Bubble {
         p5.ellipse(0, 0, d, d);
         //p5.pop();
         p5.image(this.img, -r, -r, d, d);
+        p5.textSize(20);
+        if(debug){
+            p5.noStroke();
+            let label = `p:${vec2string(this.pos)}\nv:${vec2string(this.vel)}`;
+            p5.fill('white');
+            p5.text(label,1,1);
+            p5.fill('black');
+            p5.text(label,0,0);
+        }
         p5.pop();
     }
+
+
 
     private donePlayingSound() {
         //console.log('done playing sound');
@@ -108,7 +122,7 @@ export default class Bubble {
             this.vel.x = -this.vel.x;
             this.pos.x -= (xOver + 1);
             this.vel.mult(bounceDampeningCoefficient);
-            if(this.vel.mag() < 1-bounceDampeningCoefficient){
+            if(this.vel.mag() < 1){
                 this.vel.mult(0);
             }
             this.playBounceSound();
@@ -118,7 +132,7 @@ export default class Bubble {
                 this.vel.x = -this.vel.x;
                 this.pos.x -= (xUnder - 1);
                 this.vel.mult(bounceDampeningCoefficient);
-                if(this.vel.mag() < bounceDampeningCoefficient){
+                if(this.vel.mag() < 1){
                     this.vel.mult(0);
                 }
                 this.playBounceSound();
@@ -130,12 +144,14 @@ export default class Bubble {
         if (yOver >= 0) {
             this.vel.y = -this.vel.y;
             this.pos.y -= (yOver + 1);
+            this.vel.mult(bounceDampeningCoefficient);
             this.playBounceSound()
         } else {
             let yUnder = this.pos.y - ow / 2;
             if (yUnder < 0) {
                 this.vel.y = -this.vel.y;
                 this.pos.y -= (yUnder - 1);
+                this.vel.mult(bounceDampeningCoefficient);
                 this.playBounceSound()
             }
         }
@@ -170,7 +186,7 @@ export default class Bubble {
             //console.log('bounce sound not found');
             return;
         }
-        var volume = this.p5.map(this.vel.mag(), 0, 30, .1, 1, true);
+        var volume = this.p5.map(this.vel.mag(), 0, 100, .1, 1, true);
         Bubble._bounceSnd.setVolume(volume);
         Bubble._bounceSnd.play();
     }
